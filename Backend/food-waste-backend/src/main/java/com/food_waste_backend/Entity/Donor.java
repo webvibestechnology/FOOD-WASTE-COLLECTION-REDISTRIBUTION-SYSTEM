@@ -1,6 +1,5 @@
 package com.food_waste_backend.Entity;
 
-public class Address
-{
+public class Donor {
 
 }
