@@ -1,1 +1,116 @@
-<p>donation-history works!</p>
+<div class="history-container">
+
+  <div class="history-header">
+
+    <h1>My Donations</h1>
+
+    <div class="filter-container">
+
+      <label for="status">
+        Filter by Status:
+      </label>
+
+      <select
+        id="status"
+        [(ngModel)]="filterStatus"
+      >
+
+        <option value="ALL">All</option>
+        <option value="PENDING">PENDING</option>
+        <option value="ACCEPTED">ACCEPTED</option>
+        <option value="PICKED_UP">PICKED_UP</option>
+        <option value="DELIVERED">DELIVERED</option>
+        <option value="CANCELLED">CANCELLED</option>
+        <option value="EXPIRED">EXPIRED</option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  @if (filteredDonations.length > 0) {
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Status</th>
+            <th>Expiry Time</th>
+            <th>Created At</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          @for (
+            donation of filteredDonations;
+            track donation.id
+          ) {
+
+            <tr>
+
+              <td>
+                {{ donation.title }}
+              </td>
+
+              <td>
+                {{ donation.category }}
+              </td>
+
+              <td>
+                {{ donation.quantity }}
+                {{ donation.quantityUnit }}
+              </td>
+
+              <td>
+
+                <span
+                  class="status-badge"
+                  [class.status-pending]="donation.status === 'PENDING'"
+                  [class.status-accepted]="donation.status === 'ACCEPTED'"
+                  [class.status-picked-up]="donation.status === 'PICKED_UP'"
+                  [class.status-delivered]="donation.status === 'DELIVERED'"
+                  [class.status-cancelled]="donation.status === 'CANCELLED'"
+                  [class.status-expired]="donation.status === 'EXPIRED'"
+                >
+                  {{ donation.status }}
+                </span>
+
+              </td>
+
+              <td>
+                {{ donation.expiryTime | date:'medium' }}
+              </td>
+
+              <td>
+                {{ donation.createdAt | date:'medium' }}
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  } @else {
+
+    <div class="empty-state">
+      No donations found
+    </div>
+
+  }
+
+</div>

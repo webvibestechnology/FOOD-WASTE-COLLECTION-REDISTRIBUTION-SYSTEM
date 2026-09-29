@@ -1,0 +1,90 @@
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.count {
+  font-size: 18px;
+  color: #198754;
+}
+
+.mark-all {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 5px;
+  background: #198754;
+  color: white;
+  cursor: pointer;
+}
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notification-item {
+  position: relative;
+  display: flex;
+  padding: 18px;
+  border-radius: 8px;
+  background: white;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.notification-item.unread {
+  background: #eaf6ff;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  margin: 7px 12px 0 0;
+  border-radius: 50%;
+  background: #0d6efd;
+}
+
+.content {
+  flex: 1;
+}
+
+.content h3 {
+  margin: 0 0 8px;
+  font-weight: bold;
+}
+
+.content p {
+  margin: 0 0 10px;
+}
+
+.meta {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  font-size: 13px;
+}
+
+.type {
+  padding: 4px 8px;
+  border-radius: 10px;
+  background: #e2e3e5;
+}
+
+.date {
+  color: #666;
+}
+
+.empty {
+  padding: 40px;
+  text-align: center;
+}

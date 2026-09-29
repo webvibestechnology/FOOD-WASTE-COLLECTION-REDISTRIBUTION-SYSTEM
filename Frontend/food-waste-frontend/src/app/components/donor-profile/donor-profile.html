@@ -1,1 +1,167 @@
-<p>donor-profile works!</p>
+```html
+<div class="profile-container">
+
+  <div class="profile-card">
+
+    <div class="profile-header">
+      <div class="profile-icon">
+        👤
+      </div>
+
+      <div>
+        <h2>Donor Profile</h2>
+        <p>Manage your personal information</p>
+      </div>
+    </div>
+
+    <!-- Success Message -->
+    @if (successMessage) {
+      <div class="success-message">
+        {{ successMessage }}
+      </div>
+    }
+
+    <!-- Profile Information -->
+    @if (currentUser) {
+
+      <div class="profile-details">
+
+        <!-- Name -->
+        <div class="detail-row">
+          <span class="label">Name</span>
+          <span class="value">
+            {{ currentUser.name }}
+          </span>
+        </div>
+
+        <!-- Email -->
+        <div class="detail-row">
+          <span class="label">Email</span>
+          <span class="value">
+            {{ currentUser.email }}
+          </span>
+        </div>
+
+        <!-- Phone -->
+        <div class="detail-row">
+          <span class="label">Phone</span>
+          <span class="value">
+            {{ currentUser.phone || 'Not provided' }}
+          </span>
+        </div>
+
+        <!-- Role -->
+        <div class="detail-row">
+          <span class="label">Role</span>
+          <span class="value role-badge">
+            {{ currentUser.role }}
+          </span>
+        </div>
+
+        <!-- Created At -->
+        <div class="detail-row">
+          <span class="label">Created At</span>
+          <span class="value">
+            {{ currentUser.createdAt || 'Not available' }}
+          </span>
+        </div>
+
+      </div>
+
+      <!-- Edit Button -->
+      @if (!isEditing) {
+
+        <button
+          type="button"
+          class="edit-btn"
+          (click)="toggleEdit()">
+
+          Edit Profile
+
+        </button>
+      }
+
+      <!-- Edit Form -->
+      @if (isEditing) {
+
+        <form
+          [formGroup]="editForm"
+          (ngSubmit)="onSave()"
+          class="edit-form">
+
+          <!-- Name -->
+          <div class="form-group">
+
+            <label for="name">
+              Name
+            </label>
+
+            <input
+              id="name"
+              type="text"
+              formControlName="name"
+              placeholder="Enter your name">
+
+            @if (
+              editForm.get('name')?.invalid &&
+              editForm.get('name')?.touched
+            ) {
+              <small class="error">
+                Name is required.
+              </small>
+            }
+
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group">
+
+            <label for="phone">
+              Phone
+            </label>
+
+            <input
+              id="phone"
+              type="text"
+              formControlName="phone"
+              placeholder="Enter your phone number">
+
+          </div>
+
+          <!-- Buttons -->
+          <div class="form-actions">
+
+            <button
+              type="submit"
+              class="save-btn">
+
+              Save
+
+            </button>
+
+            <button
+              type="button"
+              class="cancel-btn"
+              (click)="cancelEdit()">
+
+              Cancel
+
+            </button>
+
+          </div>
+
+        </form>
+      }
+
+    } @else {
+
+      <div class="loading">
+        Loading profile...
+      </div>
+
+    }
+
+  </div>
+
+</div>
+```

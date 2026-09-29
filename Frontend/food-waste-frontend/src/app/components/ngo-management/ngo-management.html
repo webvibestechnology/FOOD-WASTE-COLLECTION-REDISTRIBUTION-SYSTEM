@@ -1,1 +1,106 @@
-<p>ngo-management works!</p>
+<div class="container">
+
+  <h1>NGO Management</h1>
+
+  <div class="filters">
+
+    <button
+      [class.active]="filterVerified === 'ALL'"
+      (click)="filterVerified = 'ALL'"
+    >
+      All
+    </button>
+
+    <button
+      [class.active]="filterVerified === 'VERIFIED'"
+      (click)="filterVerified = 'VERIFIED'"
+    >
+      Verified Only
+    </button>
+
+    <button
+      [class.active]="filterVerified === 'UNVERIFIED'"
+      (click)="filterVerified = 'UNVERIFIED'"
+    >
+      Unverified Only
+    </button>
+
+  </div>
+
+  <div class="table-container">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>NGO Name</th>
+          <th>Registration Number</th>
+          <th>Contact Person</th>
+          <th>Verified</th>
+          <th>Registered At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let ngo of filteredNgos">
+
+          <td>{{ ngo.ngoName }}</td>
+
+          <td>{{ ngo.registrationNumber }}</td>
+
+          <td>{{ ngo.contactPerson }}</td>
+
+          <td>
+            <span
+              class="badge verified"
+              *ngIf="ngo.verified"
+            >
+              Verified
+            </span>
+
+            <span
+              class="badge unverified"
+              *ngIf="!ngo.verified"
+            >
+              Unverified
+            </span>
+          </td>
+
+          <td>
+            {{ ngo.registeredAt | date:'short' }}
+          </td>
+
+          <td>
+
+            <button
+              class="verify-btn"
+              *ngIf="!ngo.verified"
+              (click)="verifyNgo(ngo.id)"
+            >
+              Verify
+            </button>
+
+            <span *ngIf="ngo.verified">
+              —
+            </span>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <p
+    class="empty"
+    *ngIf="filteredNgos.length === 0"
+  >
+    No NGOs found.
+  </p>
+
+</div>

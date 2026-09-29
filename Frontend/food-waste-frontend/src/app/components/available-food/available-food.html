@@ -1,1 +1,70 @@
-<p>available-food works!</p>
+<div class="container">
+
+  <h1>Available Food</h1>
+
+  <div class="filter">
+    <label>Filter by Category:</label>
+
+    <select [(ngModel)]="filterCategory">
+      <option value="">All Categories</option>
+      <option value="VEGETARIAN">Vegetarian</option>
+      <option value="NON_VEGETARIAN">Non Vegetarian</option>
+      <option value="PACKAGED">Packaged</option>
+      <option value="BAKERY">Bakery</option>
+      <option value="FRUITS">Fruits</option>
+      <option value="VEGETABLES">Vegetables</option>
+    </select>
+  </div>
+
+  <div
+    class="success"
+    *ngIf="successMessage"
+  >
+    {{ successMessage }}
+  </div>
+
+  <div class="food-grid">
+
+    <div
+      class="food-card"
+      *ngFor="let donation of filteredDonations"
+    >
+
+      <h2>{{ donation.title }}</h2>
+
+      <p>
+        <strong>Description:</strong>
+        {{ donation.description }}
+      </p>
+
+      <p>
+        <strong>Quantity:</strong>
+        {{ donation.quantity }}
+        {{ donation.quantityUnit }}
+      </p>
+
+      <p>
+        <strong>Category:</strong>
+        {{ donation.category }}
+      </p>
+
+      <p>
+        <strong>Status:</strong>
+        {{ donation.status }}
+      </p>
+
+      <button
+        (click)="requestDonation(donation.id)"
+      >
+        Request Food
+      </button>
+
+    </div>
+
+  </div>
+
+  <p *ngIf="filteredDonations.length === 0">
+    No food donations available.
+  </p>
+
+</div>

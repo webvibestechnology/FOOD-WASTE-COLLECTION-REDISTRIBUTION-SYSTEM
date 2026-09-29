@@ -1,1 +1,93 @@
-<p>volunteer-management works!</p>
+<div class="container">
+
+  <h1>Volunteer Management</h1>
+
+  <div class="filter">
+
+    <label>Availability:</label>
+
+    <select [(ngModel)]="filterAvailable">
+
+      <option value="ALL">All</option>
+      <option value="AVAILABLE">Available</option>
+      <option value="UNAVAILABLE">Unavailable</option>
+
+    </select>
+
+  </div>
+
+  <div class="table-container">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Vehicle Type</th>
+          <th>Operating Area</th>
+          <th>Available</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let volunteer of filteredVolunteers">
+
+          <td>
+            {{ volunteer.user?.name || volunteer.name || '-' }}
+          </td>
+
+          <td>
+            {{ volunteer.user?.email || volunteer.email || '-' }}
+          </td>
+
+          <td>
+            {{ volunteer.vehicleType || '-' }}
+          </td>
+
+          <td>
+            {{ volunteer.operatingArea || '-' }}
+          </td>
+
+          <td>
+
+            <span
+              class="badge available"
+              *ngIf="volunteer.available"
+            >
+              Available
+            </span>
+
+            <span
+              class="badge unavailable"
+              *ngIf="!volunteer.available"
+            >
+              Unavailable
+            </span>
+
+          </td>
+
+          <td>
+            <button class="view-btn">
+              View
+            </button>
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <p
+    class="empty"
+    *ngIf="filteredVolunteers.length === 0"
+  >
+    No volunteers found.
+  </p>
+
+</div>

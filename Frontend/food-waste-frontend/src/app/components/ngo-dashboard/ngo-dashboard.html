@@ -1,1 +1,85 @@
-<p>ngo-dashboard works!</p>
+<div class="dashboard-container">
+
+  <div class="welcome-section">
+    <h1>Welcome, {{ currentUser?.name }}</h1>
+    <p>Manage your food requests and help reduce food waste.</p>
+  </div>
+
+  <div class="stats-container">
+
+    <div class="stat-card">
+      <h3>Total Requests</h3>
+      <p>{{ totalRequests }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Pending</h3>
+      <p>{{ pendingRequests }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Approved</h3>
+      <p>{{ approvedRequests }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Fulfilled</h3>
+      <p>{{ fulfilledRequests }}</p>
+    </div>
+
+  </div>
+
+  <div class="actions">
+    <a routerLink="/ngo/available-food" class="btn">
+      Browse Available Food
+    </a>
+
+    <a routerLink="/ngo/food-requests" class="btn">
+      View My Requests
+    </a>
+  </div>
+
+  <div class="recent-section">
+    <h2>Recent Requests</h2>
+
+    <div *ngIf="recentRequests.length === 0">
+      <p>No food requests found.</p>
+    </div>
+
+    <table *ngIf="recentRequests.length > 0">
+
+      <thead>
+        <tr>
+          <th>Food</th>
+          <th>Status</th>
+          <th>Notes</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let request of recentRequests">
+
+          <td>
+            {{ request.donation?.title || 'Food Donation' }}
+          </td>
+
+          <td>
+            {{ request.status }}
+          </td>
+
+          <td>
+            {{ request.notes || '-' }}
+          </td>
+
+          <td>
+            {{ request.requestedAt | date:'short' }}
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+</div>

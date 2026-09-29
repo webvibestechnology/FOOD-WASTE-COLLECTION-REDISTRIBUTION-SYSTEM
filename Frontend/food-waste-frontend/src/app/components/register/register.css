@@ -1,0 +1,153 @@
+/* Main container */
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  background: #f5f7f5;
+}
+
+/* Registration card */
+.register-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 35px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+}
+
+/* Heading */
+.register-card h1 {
+  text-align: center;
+  margin: 0 0 30px;
+  font-size: 32px;
+  color: #333;
+}
+
+/* Form group */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Labels */
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Input and select */
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 15px;
+  background: white;
+}
+
+/* Input focus */
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.15);
+}
+
+/* Placeholder */
+.form-group input::placeholder {
+  color: #999;
+}
+
+/* Validation error */
+.error-text {
+  margin-top: 6px;
+  color: #d32f2f;
+  font-size: 13px;
+}
+
+/* Password mismatch */
+.form-error {
+  margin-top: -10px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* API error */
+.api-error {
+  margin-bottom: 20px;
+  padding: 12px;
+  border-radius: 6px;
+  background: #ffebee;
+  color: #c62828;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Register button */
+button[type="submit"] {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 6px;
+  background: #4caf50;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* Button hover */
+button[type="submit"]:hover {
+  background: #43a047;
+}
+
+/* Disabled button */
+button[type="submit"]:disabled {
+  background: #9e9e9e;
+  cursor: not-allowed;
+}
+
+/* Login link */
+.login-link {
+  margin-top: 25px;
+  text-align: center;
+  color: #555;
+}
+
+/* Login link anchor */
+.login-link a {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+
+  .register-container {
+    padding: 25px 15px;
+  }
+
+  .register-card {
+    padding: 25px 20px;
+  }
+
+  .register-card h1 {
+    font-size: 27px;
+  }
+
+}

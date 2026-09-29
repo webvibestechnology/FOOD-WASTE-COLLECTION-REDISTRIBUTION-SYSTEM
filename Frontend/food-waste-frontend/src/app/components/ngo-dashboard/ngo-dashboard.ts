@@ -1,9 +1,70 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { FoodRequest } from '../../services/food-request';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-ngo-dashboard',
-  imports: [],
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './ngo-dashboard.html',
-  styleUrl: './ngo-dashboard.css',
+  styleUrl: './ngo-dashboard.css'
 })
-export class NgoDashboard {}
+export class NgoDashboard implements OnInit {
+
+  requests: any[] = [];
+  currentUser: any;
+
+  constructor(
+    private foodRequestService: FoodRequest,
+    private authService: Auth
+  ) {}
+
+  ngOnInit(): void {
+    this.currentUser = {
+      name: localStorage.getItem('name'),
+      email: localStorage.getItem('email')
+    };
+
+    this.loadRequests();
+  }
+
+  loadRequests(): void {
+    this.foodRequestService.getMyRequests().subscribe({
+      next: (data: any) => {
+        this.requests = data;
+      },
+      error: (error: any) => {
+        console.error('Error loading requests:', error);
+      }
+    });
+  }
+
+  get totalRequests(): number {
+    return this.requests.length;
+  }
+
+  get pendingRequests(): number {
+    return this.requests.filter(
+      request => request.status === 'PENDING'
+    ).length;
+  }
+
+  get approvedRequests(): number {
+    return this.requests.filter(
+      request => request.status === 'APPROVED' ||
+                 request.status === 'ACCEPTED'
+    ).length;
+  }
+
+  get fulfilledRequests(): number {
+    return this.requests.filter(
+      request => request.status === 'FULFILLED' ||
+                 request.status === 'COMPLETED'
+    ).length;
+  }
+
+  get recentRequests(): any[] {
+    return this.requests.slice(0, 5);
+  }
+}

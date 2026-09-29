@@ -1,1 +1,52 @@
-<p>reports works!</p>
+<div class="container">
+
+  <h1>System Reports</h1>
+
+  <div
+    class="loading"
+    *ngIf="isLoading"
+  >
+    Loading reports...
+  </div>
+
+  <div
+    class="stats"
+    *ngIf="!isLoading && stats"
+  >
+
+    <div class="stat-card">
+      <h3>Total Donations</h3>
+      <p>{{ stats.totalDonations || 0 }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Total Pickups</h3>
+      <p>{{ stats.totalPickups || 0 }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Total Requests</h3>
+      <p>{{ stats.totalRequests || 0 }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Active Volunteers</h3>
+      <p>{{ stats.activeVolunteers || 0 }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Active NGOs</h3>
+      <p>{{ stats.activeNgos || 0 }}</p>
+    </div>
+
+  </div>
+
+  <div
+    class="note"
+    *ngIf="!isLoading"
+  >
+    For chart-based reporting, integrate Chart.js or similar library
+    in a future update.
+  </div>
+
+</div>

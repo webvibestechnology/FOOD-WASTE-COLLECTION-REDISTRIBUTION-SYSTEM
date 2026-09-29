@@ -1,5 +1,16 @@
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { Auth } from '../services/auth';
 
-export const ngoGuard: CanActivateFn = (route, state) => {
-  return true;
+export const ngoGuard: CanActivateFn = () => {
+
+  const authService = inject(Auth);
+  const router = inject(Router);
+
+  if (authService.isNgo()) {
+    return true;
+  }
+
+  router.navigate(['/']);
+  return false;
 };

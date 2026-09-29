@@ -1,1 +1,216 @@
-<p>food-donation works!</p>
+<div class="donation-container">
+
+  <div class="donation-card">
+
+    <h1>Create Food Donation</h1>
+
+    <form
+      [formGroup]="donationForm"
+      (ngSubmit)="onSubmit()"
+    >
+
+      <!-- Title -->
+      <div class="form-group">
+
+        <label for="title">Title</label>
+
+        <input
+          id="title"
+          type="text"
+          formControlName="title"
+          placeholder="Example: Cooked Rice"
+        />
+
+        @if (
+          donationForm.get('title')?.invalid &&
+          donationForm.get('title')?.touched
+        ) {
+          <div class="error-text">
+            Title is required.
+          </div>
+        }
+
+      </div>
+
+
+      <!-- Description -->
+      <div class="form-group">
+
+        <label for="description">Description</label>
+
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="4"
+          placeholder="Describe the food"
+        ></textarea>
+
+      </div>
+
+
+      <!-- Quantity -->
+      <div class="form-group">
+
+        <label for="quantity">Quantity</label>
+
+        <input
+          id="quantity"
+          type="number"
+          formControlName="quantity"
+          min="1"
+          placeholder="Enter quantity"
+        />
+
+        @if (
+          donationForm.get('quantity')?.invalid &&
+          donationForm.get('quantity')?.touched
+        ) {
+          <div class="error-text">
+
+            @if (
+              donationForm.get('quantity')?.errors?.['required']
+            ) {
+              <span>Quantity is required.</span>
+            }
+
+            @if (
+              donationForm.get('quantity')?.errors?.['min']
+            ) {
+              <span>Quantity must be at least 1.</span>
+            }
+
+          </div>
+        }
+
+      </div>
+
+
+      <!-- Quantity Unit -->
+      <div class="form-group">
+
+        <label for="quantityUnit">Quantity Unit</label>
+
+        <select
+          id="quantityUnit"
+          formControlName="quantityUnit"
+        >
+          <option value="">Select unit</option>
+          <option value="kg">Kg</option>
+          <option value="servings">Servings</option>
+          <option value="packets">Packets</option>
+        </select>
+
+        @if (
+          donationForm.get('quantityUnit')?.invalid &&
+          donationForm.get('quantityUnit')?.touched
+        ) {
+          <div class="error-text">
+            Quantity unit is required.
+          </div>
+        }
+
+      </div>
+
+
+      <!-- Category -->
+      <div class="form-group">
+
+        <label for="category">Category</label>
+
+        <select
+          id="category"
+          formControlName="category"
+        >
+          <option value="">Select category</option>
+          <option value="COOKED_FOOD">Cooked Food</option>
+          <option value="RAW_VEGETABLES">Raw Vegetables</option>
+          <option value="FRUITS">Fruits</option>
+          <option value="BAKERY">Bakery</option>
+          <option value="DAIRY">Dairy</option>
+          <option value="PACKAGED">Packaged</option>
+          <option value="OTHER">Other</option>
+        </select>
+
+        @if (
+          donationForm.get('category')?.invalid &&
+          donationForm.get('category')?.touched
+        ) {
+          <div class="error-text">
+            Category is required.
+          </div>
+        }
+
+      </div>
+
+
+      <!-- Expiry Time -->
+      <div class="form-group">
+
+        <label for="expiryTime">Expiry Time</label>
+
+        <input
+          id="expiryTime"
+          type="datetime-local"
+          formControlName="expiryTime"
+        />
+
+        @if (
+          donationForm.get('expiryTime')?.invalid &&
+          donationForm.get('expiryTime')?.touched
+        ) {
+          <div class="error-text">
+
+            @if (
+              donationForm.get('expiryTime')?.errors?.['required']
+            ) {
+              <span>Expiry time is required.</span>
+            }
+
+            @if (
+              donationForm.get('expiryTime')?.errors?.['pastDate']
+            ) {
+              <span>Expiry time must be in the future.</span>
+            }
+
+          </div>
+        }
+
+      </div>
+
+
+      <!-- Success Message -->
+      @if (successMessage) {
+        <div class="success-message">
+          {{ successMessage }}
+        </div>
+      }
+
+
+      <!-- Error Message -->
+      @if (errorMessage) {
+        <div class="error-message">
+          {{ errorMessage }}
+        </div>
+      }
+<app-error-alert
+  [message]="errorMessage"
+  (dismiss)="errorMessage = ''">
+</app-error-alert>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        [disabled]="isLoading"
+      >
+        @if (isLoading) {
+          Submitting...
+        } @else {
+          Submit Donation
+        }
+      </button>
+
+    </form>
+
+  </div>
+
+</div>

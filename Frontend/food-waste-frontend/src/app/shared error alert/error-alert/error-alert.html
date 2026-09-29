@@ -1,0 +1,17 @@
+@if (message) {
+  <div class="error-alert">
+
+    <span class="error-message">
+      {{ message }}
+    </span>
+
+    <button
+      type="button"
+      class="close-button"
+      (click)="close()"
+    >
+      ×
+    </button>
+
+  </div>
+}

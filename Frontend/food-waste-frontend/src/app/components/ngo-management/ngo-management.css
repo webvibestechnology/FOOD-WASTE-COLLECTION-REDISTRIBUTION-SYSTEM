@@ -1,0 +1,77 @@
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 30px;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.filters button {
+  padding: 10px 18px;
+  border: 1px solid #198754;
+  border-radius: 5px;
+  background: white;
+  color: #198754;
+  cursor: pointer;
+}
+
+.filters button.active {
+  background: #198754;
+  color: white;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th,
+td {
+  padding: 14px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background: #f5f5f5;
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.verified {
+  background: #d1e7dd;
+  color: #146c43;
+}
+
+.unverified {
+  background: #f8d7da;
+  color: #b02a37;
+}
+
+.verify-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  background: #198754;
+  color: white;
+  cursor: pointer;
+}
+
+.empty {
+  text-align: center;
+  margin-top: 25px;
+}

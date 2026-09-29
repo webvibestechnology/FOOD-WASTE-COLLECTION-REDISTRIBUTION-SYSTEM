@@ -1,1 +1,85 @@
-<p>donation-management works!</p>
+<div class="container">
+
+  <h1>Donation Management</h1>
+
+  <div class="filter">
+
+    <label>Status:</label>
+
+    <select [(ngModel)]="filterStatus">
+
+      <option value="ALL">All</option>
+      <option value="PENDING">Pending</option>
+      <option value="AVAILABLE">Available</option>
+      <option value="REQUESTED">Requested</option>
+      <option value="ACCEPTED">Accepted</option>
+      <option value="COLLECTED">Collected</option>
+      <option value="DELIVERED">Delivered</option>
+      <option value="COMPLETED">Completed</option>
+      <option value="CANCELLED">Cancelled</option>
+
+    </select>
+
+  </div>
+
+  <div
+    class="table-container"
+    *ngIf="filteredDonations.length > 0"
+  >
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Donor Name</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>Quantity</th>
+          <th>Created At</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let donation of filteredDonations">
+
+          <td>{{ donation.title }}</td>
+
+          <td>
+            {{ donation.donor?.user?.name || donation.donor?.name || '-' }}
+          </td>
+
+          <td>{{ donation.category }}</td>
+
+          <td>
+            <span class="badge">
+              {{ donation.status }}
+            </span>
+          </td>
+
+          <td>
+            {{ donation.quantity }}
+            {{ donation.quantityUnit }}
+          </td>
+
+          <td>
+            {{ donation.createdAt | date:'short' }}
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <div
+    class="empty"
+    *ngIf="filteredDonations.length === 0"
+  >
+    No donations found.
+  </div>
+
+</div>

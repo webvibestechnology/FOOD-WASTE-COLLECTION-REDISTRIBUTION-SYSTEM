@@ -1,1 +1,89 @@
-<p>volunteer-dashboard works!</p>
+<div class="container">
+
+  <div class="welcome">
+    <h1>Welcome, {{ currentUser?.name }}</h1>
+    <p>Manage your food pickup activities.</p>
+  </div>
+
+  <div
+    class="availability"
+    *ngIf="volunteerProfile"
+  >
+
+    <strong>Availability:</strong>
+
+    <span>
+      {{ volunteerProfile.available ? 'Available' : 'Unavailable' }}
+    </span>
+
+    <button (click)="toggleAvailability()">
+      Change Availability
+    </button>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="card">
+      <h3>Total Pickups</h3>
+      <p>{{ pickups.length }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Scheduled</h3>
+      <p>{{ scheduledPickups }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Completed</h3>
+      <p>{{ completedPickups }}</p>
+    </div>
+
+  </div>
+
+  <a
+    routerLink="/volunteer/pickup-requests"
+    class="btn"
+  >
+    View Pickup Requests
+  </a>
+
+  <h2>Recent Pickups</h2>
+
+  <table *ngIf="recentPickups.length > 0">
+
+    <thead>
+      <tr>
+        <th>Food</th>
+        <th>Status</th>
+        <th>Scheduled Time</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let pickup of recentPickups">
+
+        <td>
+          {{ pickup.donation?.title || 'Food Donation' }}
+        </td>
+
+        <td>
+          {{ pickup.status }}
+        </td>
+
+        <td>
+          {{ pickup.scheduledTime | date:'short' }}
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+  <p *ngIf="recentPickups.length === 0">
+    No pickup requests found.
+  </p>
+
+</div>

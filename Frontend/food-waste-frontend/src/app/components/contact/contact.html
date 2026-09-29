@@ -1,1 +1,79 @@
-<p>contact works!</p>
+<div class="contact-container">
+
+  <div class="contact-card">
+
+    <h1>Contact Us</h1>
+
+    <p>
+      Have a question or feedback? Send us a message.
+    </p>
+
+    <form (ngSubmit)="onSubmit()">
+
+      <!-- Name -->
+      <div class="form-group">
+
+        <label for="name">Name</label>
+
+        <input
+          id="name"
+          type="text"
+          name="name"
+          [(ngModel)]="name"
+          required
+          placeholder="Enter your name"
+        />
+
+      </div>
+
+
+      <!-- Email -->
+      <div class="form-group">
+
+        <label for="email">Email</label>
+
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          required
+          placeholder="Enter your email"
+        />
+
+      </div>
+
+
+      <!-- Message -->
+      <div class="form-group">
+
+        <label for="message">Message</label>
+
+        <textarea
+          id="message"
+          name="message"
+          [(ngModel)]="message"
+          required
+          rows="5"
+          placeholder="Enter your message"
+        ></textarea>
+
+      </div>
+
+
+      <button type="submit">
+        Send Message
+      </button>
+
+    </form>
+
+
+    @if (successMessage) {
+      <div class="success-message">
+        {{ successMessage }}
+      </div>
+    }
+
+  </div>
+
+</div>

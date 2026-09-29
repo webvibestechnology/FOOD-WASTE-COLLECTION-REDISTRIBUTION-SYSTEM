@@ -1,1 +1,84 @@
-<p>pickup-requests works!</p>
+<div class="container">
+
+  <h1>Pickup Requests</h1>
+
+  <div class="filter">
+
+    <label>Filter:</label>
+
+    <select [(ngModel)]="filterStatus">
+
+      <option value="">All</option>
+      <option value="SCHEDULED">Scheduled</option>
+      <option value="IN_PROGRESS">In Progress</option>
+      <option value="COMPLETED">Completed</option>
+      <option value="FAILED">Failed</option>
+
+    </select>
+
+  </div>
+
+  <div class="pickup-list">
+
+    <div
+      class="pickup-card"
+      *ngFor="let pickup of filteredPickups"
+    >
+
+      <h2>
+        {{ pickup.donation?.title || 'Food Pickup' }}
+      </h2>
+
+      <p>
+        <strong>Status:</strong>
+        {{ pickup.status }}
+      </p>
+
+      <p>
+        <strong>Scheduled:</strong>
+        {{ pickup.scheduledTime | date:'medium' }}
+      </p>
+
+      <a
+        [routerLink]="['/volunteer/pickup-details', pickup.id]"
+      >
+        View Details
+      </a>
+
+      <div class="buttons">
+
+        <button
+          *ngIf="pickup.status === 'SCHEDULED'"
+          (click)="updateStatus(pickup.id, 'IN_PROGRESS')"
+        >
+          Start Pickup
+        </button>
+
+        <button
+          *ngIf="pickup.status === 'IN_PROGRESS'"
+          (click)="updateStatus(pickup.id, 'COMPLETED')"
+        >
+          Mark Complete
+        </button>
+
+        <button
+          *ngIf="
+            pickup.status === 'SCHEDULED' ||
+            pickup.status === 'IN_PROGRESS'
+          "
+          (click)="updateStatus(pickup.id, 'FAILED')"
+        >
+          Report Failed
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <p *ngIf="filteredPickups.length === 0">
+    No pickup requests found.
+  </p>
+
+</div>
