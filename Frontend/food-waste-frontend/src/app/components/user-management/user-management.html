@@ -1,1 +1,72 @@
-<p>user-management works!</p>
+<div class="container">
+
+  <h1>User Management</h1>
+
+  <div class="search">
+
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Search by name or email"
+    />
+
+  </div>
+
+  <div class="table-container">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Created At</th>
+          <th>Action</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let user of filteredUsers">
+
+          <td>{{ user.name }}</td>
+
+          <td>{{ user.email }}</td>
+
+          <td>{{ user.role }}</td>
+
+          <td>
+            {{ user.enabled ? 'Active' : 'Inactive' }}
+          </td>
+
+          <td>
+            {{ user.createdAt | date:'short' }}
+          </td>
+
+          <td>
+
+            <button
+              (click)="toggleStatus(user.id)"
+            >
+              {{ user.enabled ? 'Deactivate' : 'Activate' }}
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <p *ngIf="filteredUsers.length === 0">
+    No users found.
+  </p>
+
+</div>

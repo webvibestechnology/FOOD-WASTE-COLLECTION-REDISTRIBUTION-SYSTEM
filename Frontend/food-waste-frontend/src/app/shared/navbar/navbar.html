@@ -1,0 +1,156 @@
+<nav class="navbar">
+
+  <div class="navbar-brand">
+    <a routerLink="/">
+      FoodWaste Connect
+    </a>
+  </div>
+
+  <div class="navbar-links">
+
+    <!-- Not Logged In -->
+    <ng-container *ngIf="!isLoggedIn">
+
+      <a routerLink="/">Home</a>
+
+      <a routerLink="/about">About</a>
+
+      <a routerLink="/contact">Contact</a>
+
+      <a routerLink="/login" class="login-button">
+        Login
+      </a>
+
+      <a routerLink="/register" class="register-button">
+        Register
+      </a>
+
+    </ng-container>
+
+
+    <!-- Donor -->
+    <ng-container *ngIf="isLoggedIn && isDonor">
+
+      <span class="welcome">
+        Hi, {{ userName }}
+      </span>
+
+      <a routerLink="/donor/dashboard">
+        My Dashboard
+      </a>
+
+      <a routerLink="/donor/donate">
+        Donate Food
+      </a>
+
+      <a routerLink="/donor/history">
+        My Donations
+      </a>
+
+      <a routerLink="/notifications">
+        Notifications
+      </a>
+
+      <button (click)="logout()">
+        Logout
+      </button>
+
+    </ng-container>
+
+
+    <!-- NGO -->
+    <ng-container *ngIf="isLoggedIn && isNgo">
+
+      <span class="welcome">
+        Hi, {{ userName }}
+      </span>
+
+      <a routerLink="/ngo/dashboard">
+        My Dashboard
+      </a>
+
+      <a routerLink="/ngo/available-food">
+        Available Food
+      </a>
+
+      <a routerLink="/ngo/requests">
+        My Requests
+      </a>
+
+      <a routerLink="/notifications">
+        Notifications
+      </a>
+
+      <button (click)="logout()">
+        Logout
+      </button>
+
+    </ng-container>
+
+
+    <!-- Volunteer -->
+    <ng-container *ngIf="isLoggedIn && isVolunteer">
+
+      <span class="welcome">
+        Hi, {{ userName }}
+      </span>
+
+      <a routerLink="/volunteer/dashboard">
+        My Dashboard
+      </a>
+
+      <a routerLink="/volunteer/pickups">
+        My Pickups
+      </a>
+
+      <a routerLink="/notifications">
+        Notifications
+      </a>
+
+      <button (click)="logout()">
+        Logout
+      </button>
+
+    </ng-container>
+
+
+    <!-- Admin -->
+    <ng-container *ngIf="isLoggedIn && isAdmin">
+
+      <span class="welcome">
+        Hi, {{ userName }}
+      </span>
+
+      <a routerLink="/admin/dashboard">
+        Dashboard
+      </a>
+
+      <a routerLink="/admin/users">
+        Users
+      </a>
+
+      <a routerLink="/admin/donations">
+        Donations
+      </a>
+
+      <a routerLink="/admin/ngos">
+        NGOs
+      </a>
+
+      <a routerLink="/admin/volunteers">
+        Volunteers
+      </a>
+
+      <a routerLink="/admin/reports">
+        Reports
+      </a>
+
+      <button (click)="logout()">
+        Logout
+      </button>
+
+    </ng-container>
+
+  </div>
+
+</nav>

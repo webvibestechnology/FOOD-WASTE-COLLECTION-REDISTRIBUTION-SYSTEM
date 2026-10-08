@@ -1,0 +1,52 @@
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 30px;
+}
+
+.filter {
+  margin-bottom: 25px;
+}
+
+.filter select {
+  padding: 8px 12px;
+  margin-left: 10px;
+}
+
+.pickup-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.pickup-card {
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pickup-card a {
+  display: inline-block;
+  margin: 10px 0;
+  color: #198754;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.buttons button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .pickup-list {
+    grid-template-columns: 1fr;
+  }
+}

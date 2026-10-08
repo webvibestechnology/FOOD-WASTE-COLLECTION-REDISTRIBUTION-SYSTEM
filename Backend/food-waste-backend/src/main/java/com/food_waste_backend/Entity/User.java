@@ -2,6 +2,8 @@ package com.food_waste_backend.Entity;
 
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.Nullable;
+
 import com.food_waste_backend.enums.UserRole;
 
 import jakarta.persistence.Column;
@@ -61,12 +63,69 @@ public class User {
             enabled = true;
         }
 
-        createdAt = now;
-        updatedAt = now;
+        setCreatedAt(now);
+        setUpdatedAt(now);
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
+        setUpdatedAt(LocalDateTime.now());
     }
+
+	public Object getEmail() {
+		return null;
+	}
+
+	public Object getName() {
+		return null;
+	}
+
+	public Object getRole() {
+		return null;
+	}
+
+	public Object getId() {
+		return null;
+	}
+
+	public void setName(String name2) {
+		
+	}
+
+	public void setEmail(String email2) {
+		
+	}
+
+	public String getPassword() {
+		return null;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public void setPassword(@Nullable String encode) {
+		// TODO Auto-generated method stub
+		
+	}
 }

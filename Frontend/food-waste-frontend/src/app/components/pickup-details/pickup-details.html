@@ -1,1 +1,85 @@
-<p>pickup-details works!</p>
+<div class="container">
+
+  <button
+    class="back-button"
+    (click)="goBack()"
+  >
+    ← Back
+  </button>
+
+  <div
+    class="details-card"
+    *ngIf="pickup"
+  >
+
+    <h1>Pickup Details</h1>
+
+    <div class="detail">
+      <strong>Food:</strong>
+      {{ pickup.donation?.title || 'Food Donation' }}
+    </div>
+
+    <div class="detail">
+      <strong>Description:</strong>
+      {{ pickup.donation?.description || '-' }}
+    </div>
+
+    <div class="detail">
+      <strong>Quantity:</strong>
+      {{ pickup.donation?.quantity || '-' }}
+      {{ pickup.donation?.quantityUnit || '' }}
+    </div>
+
+    <div class="detail">
+      <strong>Status:</strong>
+      {{ pickup.status }}
+    </div>
+
+    <div class="detail">
+      <strong>Scheduled Time:</strong>
+      {{ pickup.scheduledTime | date:'medium' }}
+    </div>
+
+    <div
+      class="detail"
+      *ngIf="pickup.completedTime"
+    >
+      <strong>Completed Time:</strong>
+      {{ pickup.completedTime | date:'medium' }}
+    </div>
+
+    <div class="buttons">
+
+      <button
+        *ngIf="pickup.status === 'SCHEDULED'"
+        (click)="updateStatus('IN_PROGRESS')"
+      >
+        Start Pickup
+      </button>
+
+      <button
+        *ngIf="pickup.status === 'IN_PROGRESS'"
+        (click)="updateStatus('COMPLETED')"
+      >
+        Complete Pickup
+      </button>
+
+      <button
+        *ngIf="
+          pickup.status === 'SCHEDULED' ||
+          pickup.status === 'IN_PROGRESS'
+        "
+        (click)="updateStatus('FAILED')"
+      >
+        Report Failed
+      </button>
+
+    </div>
+
+  </div>
+
+  <p *ngIf="!pickup">
+    Loading pickup details...
+  </p>
+
+</div>

@@ -1,1 +1,46 @@
-<p>food-request works!</p>
+<div class="container">
+
+  <h1>My Food Requests</h1>
+
+  <div *ngIf="requests.length === 0">
+    <p>No food requests found.</p>
+  </div>
+
+  <table *ngIf="requests.length > 0">
+
+    <thead>
+      <tr>
+        <th>Food</th>
+        <th>Status</th>
+        <th>Notes</th>
+        <th>Requested At</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let request of requests">
+
+        <td>
+          {{ request.donation?.title || 'Food Donation' }}
+        </td>
+
+        <td>
+          {{ request.status }}
+        </td>
+
+        <td>
+          {{ request.notes || '-' }}
+        </td>
+
+        <td>
+          {{ request.requestedAt | date:'short' }}
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>

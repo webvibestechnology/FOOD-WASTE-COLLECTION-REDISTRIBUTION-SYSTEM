@@ -1,0 +1,184 @@
+
+.profile-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.profile-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.profile-icon {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #e8f5e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.profile-header h2 {
+  margin: 0;
+  font-size: 25px;
+}
+
+.profile-header p {
+  margin: 5px 0 0;
+  color: #777;
+}
+
+.success-message {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 12px 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.profile-details {
+  border-top: 1px solid #eee;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.label {
+  font-weight: 600;
+  color: #555;
+}
+
+.value {
+  color: #222;
+  text-align: right;
+}
+
+.role-badge {
+  background: #e3f2fd;
+  color: #1565c0;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.edit-btn,
+.save-btn,
+.cancel-btn {
+  border: none;
+  padding: 11px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.edit-btn {
+  margin-top: 25px;
+  background: #1976d2;
+  color: white;
+}
+
+.edit-form {
+  margin-top: 25px;
+  border-top: 1px solid #eee;
+  padding-top: 25px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.error {
+  display: block;
+  margin-top: 5px;
+  color: #d32f2f;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.save-btn {
+  background: #2e7d32;
+  color: white;
+}
+
+.cancel-btn {
+  background: #757575;
+  color: white;
+}
+
+.loading {
+  text-align: center;
+  padding: 30px;
+  color: #777;
+}
+
+@media (max-width: 600px) {
+
+  .profile-container {
+    margin: 20px auto;
+    padding: 10px;
+  }
+
+  .profile-card {
+    padding: 20px;
+  }
+
+  .detail-row {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .value {
+    text-align: left;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    width: 100%;
+  }
+}
+

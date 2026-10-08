@@ -1,0 +1,63 @@
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 30px;
+}
+
+.filter {
+  margin-bottom: 25px;
+}
+
+.filter label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.filter select {
+  padding: 8px 12px;
+}
+
+.success {
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background: #d1e7dd;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.food-card {
+  padding: 20px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.food-card h2 {
+  margin-top: 0;
+}
+
+.food-card button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 5px;
+  background: #198754;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .food-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .food-grid {
+    grid-template-columns: 1fr;
+  }
+}

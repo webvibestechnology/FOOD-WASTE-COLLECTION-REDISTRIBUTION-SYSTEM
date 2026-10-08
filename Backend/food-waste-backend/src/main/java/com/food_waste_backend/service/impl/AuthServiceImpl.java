@@ -12,8 +12,8 @@ import com.food_waste_backend.dto.RegisterRequest;
 import com.food_waste_backend.dto.UserResponse;
 import com.food_waste_backend.exception.BadRequestException;
 import com.food_waste_backend.repository.UserRepository;
+import com.food_waste_backend.security.JwtService;
 import com.food_waste_backend.service.AuthService;
-import com.food_waste_backend.service.JwtService;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -58,7 +58,9 @@ public class AuthServiceImpl implements AuthService {
                 .userId(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
-                .role(user.getRole() != null ? user.getRole().name() : null)
+                .role(user.getRole() != null
+                        ? user.getRole().name()
+                        : null)
                 .build();
     }
 
@@ -87,7 +89,9 @@ public class AuthServiceImpl implements AuthService {
 
             user.setRole(
                     com.food_waste_backend.enums.UserRole
-                            .valueOf(registerRequest.getRole().toUpperCase())
+                            .valueOf(
+                                    registerRequest.getRole().toUpperCase()
+                            )
             );
         }
 
