@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../../services/auth';
-import { ErrorAlert } from '../../shared/error-alert/error-alert';
+import { ErrorAlert } from '../../shared error alert/error-alert/error-alert';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -16,10 +22,7 @@ import { ErrorAlert } from '../../shared/error-alert/error-alert';
 })
 export class LoginComponent {
 
-  loginForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]]
-  });
+  loginForm!: FormGroup;
 
   errorMessage: string = '';
   isLoading: boolean = false;
@@ -28,7 +31,12 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: Auth
-  ) {}
+  ) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
 
   onSubmit(): void {
 
@@ -85,3 +93,4 @@ export class LoginComponent {
     });
   }
 }
+

@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Admin } from '../../services/admin';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, DatePipe],
   templateUrl: './user-management.html',
   styleUrl: './user-management.css'
 })
-export class UserManagement implements OnInit {
+export class UserManagementComponent implements OnInit {
 
   users: any[] = [];
   searchQuery = '';

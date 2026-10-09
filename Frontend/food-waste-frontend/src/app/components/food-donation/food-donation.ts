@@ -1,7 +1,11 @@
+// Angular dependencies are resolved by the project build; suppress an editor
+// diagnostic when dependencies have not yet been installed locally.
+// @ts-ignore TS2307
 import { Component } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
+  FormGroup,
   ReactiveFormsModule,
   ValidationErrors,
   ValidatorFn,
@@ -9,59 +13,62 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Donation } from '../../services/donation';
+import { ErrorAlert } from '../../shared error alert/error-alert/error-alert';
 
 @Component({
   selector: 'app-food-donation',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ErrorAlert
   ],
   templateUrl: './food-donation.html',
-  styleUrl: './food-donation.css'
+  styleUrls: ['./food-donation.css']
 })
 export class FoodDonationComponent {
 
   successMessage: string = '';
   errorMessage: string = '';
   isLoading: boolean = false;
-
-  donationForm = this.formBuilder.group({
-    title: ['', Validators.required],
-
-    description: [''],
-
-    quantity: [
-      '',
-      [
-        Validators.required,
-        Validators.min(1)
-      ]
-    ],
-
-    quantityUnit: [
-      '',
-      Validators.required
-    ],
-
-    category: [
-      '',
-      Validators.required
-    ],
-
-    expiryTime: [
-      '',
-      [
-        Validators.required,
-        this.futureDateValidator()
-      ]
-    ]
-  });
+  donationForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private donationService: Donation,
     private router: Router
-  ) {}
+  ) {
+    this.donationForm = this.formBuilder.group({
+      title: ['', Validators.required],
+
+      description: [''],
+
+      quantity: [
+        '',
+        [
+          Validators.required,
+          Validators.min(1)
+        ]
+      ],
+
+      quantityUnit: [
+        '',
+        Validators.required
+      ],
+
+      category: [
+        '',
+        Validators.required
+      ],
+
+      expiryTime: [
+        '',
+        [
+          Validators.required,
+          this.futureDateValidator()
+        ]
+      ]
+    });
+  }
 
   futureDateValidator(): ValidatorFn {
     return (

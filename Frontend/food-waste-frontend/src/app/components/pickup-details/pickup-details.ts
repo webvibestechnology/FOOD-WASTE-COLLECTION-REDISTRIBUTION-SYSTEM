@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pickup } from '../../services/pickup';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-pickup-details',
   standalone: true,
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './pickup-details.html',
   styleUrl: './pickup-details.css'
 })
-export class PickupDetails implements OnInit {
+export class PickupDetailsComponent implements OnInit {
 
   pickup: any;
   pickupId!: number;

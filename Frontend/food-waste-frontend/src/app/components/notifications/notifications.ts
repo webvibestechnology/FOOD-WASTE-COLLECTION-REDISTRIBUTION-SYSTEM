@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Notification as NotificationService } from '../../services/notification';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-notifications',
   standalone: true,
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './notifications.html',
   styleUrl: './notifications.css'
 })
-export class Notifications implements OnInit {
+export class NotificationsComponent implements OnInit {
 
   notifications: any[] = [];
 

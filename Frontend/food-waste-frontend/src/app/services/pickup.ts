@@ -36,6 +36,12 @@ export class Pickup {
     );
   }
 
+  getPickupById(id: number): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/${id}`
+    );
+  }
+
   updatePickupStatus(
     id: number,
     status: string

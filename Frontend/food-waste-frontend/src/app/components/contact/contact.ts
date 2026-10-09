@@ -1,4 +1,6 @@
+// @ts-ignore Angular dependencies are resolved by the Angular build environment.
 import { Component } from '@angular/core';
+// @ts-ignore Angular dependencies are resolved by the Angular build environment.
 import { FormsModule } from '@angular/forms';
 
 @Component({

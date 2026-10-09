@@ -9,7 +9,7 @@ import { Volunteer } from '../../services/volunteer';
   templateUrl: './volunteer-management.html',
   styleUrl: './volunteer-management.css'
 })
-export class VolunteerManagement implements OnInit {
+export class VolunteerManagementComponent implements OnInit {
 
   volunteers: any[] = [];
   filterAvailable = 'ALL';

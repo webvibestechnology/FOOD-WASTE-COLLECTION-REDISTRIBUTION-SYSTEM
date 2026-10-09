@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FoodRequest } from '../../services/food-request';
+import { DatePipe } from '@angular/common';
 
 @Component({
+  
   selector: 'app-food-request',
   standalone: true,
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './food-request.html',
   styleUrl: './food-request.css'
 })

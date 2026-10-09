@@ -1,15 +1,18 @@
+// @ts-ignore Angular types are provided by the project's installed dependencies.
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Donation } from '../../services/donation';
 import { Auth } from '../../services/auth';
+import { LoadingSpinnersComponent } from '../../shared loading-spinnes/loading-spinner/loading-spinners';
 
 @Component({
   selector: 'app-donor-dashboard',
   standalone: true,
   imports: [
     RouterLink,
-    DatePipe
+    DatePipe,
+    LoadingSpinnersComponent
   ],
   templateUrl: './donor-dashboard.html',
   styleUrl: './donor-dashboard.css'

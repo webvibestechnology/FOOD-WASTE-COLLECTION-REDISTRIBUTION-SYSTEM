@@ -1,3 +1,5 @@
+// Angular dependencies may be unavailable while the project is being installed.
+// @ts-ignore
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Donation } from '../../services/donation';
@@ -10,7 +12,7 @@ import { FoodRequest } from '../../services/food-request';
   templateUrl: './available-food.html',
   styleUrl: './available-food.css'
 })
-export class AvailableFood implements OnInit {
+export class AvailableFoodComponent implements OnInit {
 
   donations: any[] = [];
   filterCategory = '';

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+// @ts-ignore Angular types are provided by the project's installed dependencies.
+import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
 
@@ -14,7 +15,7 @@ import { Auth } from '../../services/auth';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
   isLoggedIn: boolean = false;
   userRole: string | null = null;

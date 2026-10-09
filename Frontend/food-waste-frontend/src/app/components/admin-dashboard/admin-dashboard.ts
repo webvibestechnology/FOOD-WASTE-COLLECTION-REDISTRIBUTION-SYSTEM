@@ -1,4 +1,6 @@
+// @ts-ignore
 import { Component, OnInit } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Admin } from '../../services/admin';
 import { Report } from '../../services/report';
@@ -6,11 +8,11 @@ import { Report } from '../../services/report';
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe, CommonModule],
   templateUrl: './admin-dashboard.html',
-  styleUrl: './admin-dashboard.css'
+  styleUrls: ['./admin-dashboard.css']
 })
-export class AdminDashboard implements OnInit {
+export class AdminDashboardComponent implements OnInit {
 
   stats: any = {};
   recentDonations: any[] = [];

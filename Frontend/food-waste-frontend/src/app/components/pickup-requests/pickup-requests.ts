@@ -2,15 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Pickup } from '../../services/pickup';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-pickup-requests',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, DatePipe],
   templateUrl: './pickup-requests.html',
   styleUrl: './pickup-requests.css'
 })
-export class PickupRequests implements OnInit {
+export class PickupRequestsComponent implements OnInit {
 
   pickups: any[] = [];
   filterStatus = '';

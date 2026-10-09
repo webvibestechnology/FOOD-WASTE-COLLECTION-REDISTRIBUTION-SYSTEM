@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Ngo } from '../../services/ngo';
 import { Admin } from '../../services/admin';
+import {DatePipe} from '@angular/common'
 
 @Component({
   selector: 'app-ngo-management',
   standalone: true,
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './ngo-management.html',
   styleUrl: './ngo-management.css'
 })
-export class NgoManagement implements OnInit {
+export class NgoManagementComponent implements OnInit {
 
   ngos: any[] = [];
   filterVerified = 'ALL';

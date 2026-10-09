@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Component, type OnInit } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Donation } from '../../services/donation';
 
@@ -7,6 +7,7 @@ import { Donation } from '../../services/donation';
   selector: 'app-donation-history',
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
     DatePipe
   ],

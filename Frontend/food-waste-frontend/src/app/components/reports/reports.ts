@@ -8,7 +8,7 @@ import { Report } from '../../services/report';
   templateUrl: './reports.html',
   styleUrl: './reports.css'
 })
-export class Reports implements OnInit {
+export class ReportsComponent implements OnInit {
 
   stats: any = null;
   isLoading = false;

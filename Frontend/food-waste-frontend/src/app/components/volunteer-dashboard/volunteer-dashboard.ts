@@ -3,15 +3,16 @@ import { RouterLink } from '@angular/router';
 import { Pickup } from '../../services/pickup';
 import { Volunteer } from '../../services/volunteer';
 import { Auth } from '../../services/auth';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-volunteer-dashboard',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   templateUrl: './volunteer-dashboard.html',
   styleUrl: './volunteer-dashboard.css'
 })
-export class VolunteerDashboard implements OnInit {
+export class VolunteerDashboardComponent implements OnInit {
 
   pickups: any[] = [];
   volunteerProfile: any;

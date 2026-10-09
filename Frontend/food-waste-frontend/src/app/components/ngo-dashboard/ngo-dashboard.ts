@@ -2,15 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FoodRequest } from '../../services/food-request';
 import { Auth } from '../../services/auth';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-ngo-dashboard',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   templateUrl: './ngo-dashboard.html',
   styleUrl: './ngo-dashboard.css'
 })
-export class NgoDashboard implements OnInit {
+export class NgoDashboardComponent implements OnInit {
 
   requests: any[] = [];
   currentUser: any;

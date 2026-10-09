@@ -1,54 +1,42 @@
+
 import { Routes } from '@angular/router';
 
-// Guards
-import { authGuard } from './guards/auth-guard';
-import { adminGuard } from './guards/admin-guard';
-import { donorGuard } from './guards/donor-guard';
-import { ngoGuard } from './guards/ngo-guard';
-import { volunteerGuard } from './guards/volunteer-guard';
-
-// Public Components
 import { HomeComponent } from './components/home/home';
 import { LoginComponent } from './components/login/login';
 import { RegisterComponent } from './components/register/register';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password';
 import { AboutComponent } from './components/about/about';
 import { ContactComponent } from './components/contact/contact';
-import { NotFoundComponent } from './components/not-found/not-found';
 
-// Common/Auth Component
 import { NotificationsComponent } from './components/notifications/notifications';
 
-// Donor Components
-import { DonorDashboardComponent } from './components/donor/donor-dashboard/donor-dashboard';
-import { DonorProfileComponent } from './components/donor/donor-profile/donor-profile';
-import { FoodDonationComponent } from './components/donor/food-donation/food-donation';
-import { DonationHistoryComponent } from './components/donor/donation-history/donation-history';
+import { DonorDashboardComponent } from './components/donor-dashboard/donor-dashboard';
+import { DonorProfileComponent } from './components/donor-profile/donor-profile';
+import { FoodDonationComponent } from './components/food-donation/food-donation';
+import { DonationHistoryComponent } from './components/donation-history/donation-history';
 
-// NGO Components
-import { NgoDashboardComponent } from './components/ngo/ngo-dashboard/ngo-dashboard';
-import { FoodRequestComponent } from './components/ngo/food-request/food-request';
-import { AvailableFoodComponent } from './components/ngo/available-food/available-food';
+import { NgoDashboardComponent } from './components/ngo-dashboard/ngo-dashboard';
+import { FoodRequestComponent } from './components/food-request/food-request';
+import { AvailableFoodComponent } from './components/available-food/available-food';
 
-// Volunteer Components
-import { VolunteerDashboardComponent } from './components/volunteer/volunteer-dashboard/volunteer-dashboard';
-import { PickupRequestsComponent } from './components/volunteer/pickup-requests/pickup-requests';
-import { PickupDetailsComponent } from './components/volunteer/pickup-details/pickup-details';
+import { VolunteerDashboardComponent } from './components/volunteer-dashboard/volunteer-dashboard';
+import { PickupRequestsComponent } from './components/pickup-requests/pickup-requests';
+import { PickupDetailsComponent } from './components/pickup-details/pickup-details';
 
-// Admin Components
-import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard';
-import { UserManagementComponent } from './components/admin/user-management/user-management';
-import { DonationManagementComponent } from './components/admin/donation-management/donation-management';
-import { NgoManagementComponent } from './components/admin/ngo-management/ngo-management';
-import { VolunteerManagementComponent } from './components/admin/volunteer-management/volunteer-management';
-import { ReportsComponent } from './components/admin/reports/reports';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard';
+import { UserManagementComponent } from './components/user-management/user-management';
+import { DonationManagementComponent } from './components/donation-management/donation-management';
+import { NgoManagementComponent } from './components/ngo-management/ngo-management';
+import { VolunteerManagementComponent } from './components/volunteer-management/volunteer-management';
+import { ReportsComponent } from './components/reports/reports';
+
+import { authGuard } from './guards/auth-guard';
+import { adminGuard } from './guards/admin-guard';
+import { donorGuard } from './guards/donor-guard';
+import { ngoGuard } from './guards/ngo-guard';
+import { volunteerGuard } from './guards/volunteer-guard';
 
 export const routes: Routes = [
-
-  // =========================
-  // PUBLIC ROUTES
-  // =========================
-
   {
     path: '',
     component: HomeComponent
@@ -79,22 +67,13 @@ export const routes: Routes = [
     component: ContactComponent
   },
 
-
-  // =========================
-  // AUTHENTICATED ROUTES
-  // =========================
-
   {
     path: 'notifications',
     component: NotificationsComponent,
     canActivate: [authGuard]
   },
 
-
-  // =========================
-  // DONOR ROUTES
-  // =========================
-
+  // Donor
   {
     path: 'donor/dashboard',
     component: DonorDashboardComponent,
@@ -108,22 +87,18 @@ export const routes: Routes = [
   },
 
   {
-    path: 'donor/donate',
+    path: 'donor/food-donation',
     component: FoodDonationComponent,
     canActivate: [authGuard, donorGuard]
   },
 
   {
-    path: 'donor/history',
+    path: 'donor/donation-history',
     component: DonationHistoryComponent,
     canActivate: [authGuard, donorGuard]
   },
 
-
-  // =========================
-  // NGO ROUTES
-  // =========================
-
+  // NGO
   {
     path: 'ngo/dashboard',
     component: NgoDashboardComponent,
@@ -131,7 +106,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'ngo/requests',
+    path: 'ngo/food-request',
     component: FoodRequestComponent,
     canActivate: [authGuard, ngoGuard]
   },
@@ -142,11 +117,7 @@ export const routes: Routes = [
     canActivate: [authGuard, ngoGuard]
   },
 
-
-  // =========================
-  // VOLUNTEER ROUTES
-  // =========================
-
+  // Volunteer
   {
     path: 'volunteer/dashboard',
     component: VolunteerDashboardComponent,
@@ -154,22 +125,18 @@ export const routes: Routes = [
   },
 
   {
-    path: 'volunteer/pickups',
+    path: 'volunteer/pickup-requests',
     component: PickupRequestsComponent,
     canActivate: [authGuard, volunteerGuard]
   },
 
   {
-    path: 'volunteer/pickups/:id',
+    path: 'volunteer/pickup-details/:id',
     component: PickupDetailsComponent,
     canActivate: [authGuard, volunteerGuard]
   },
 
-
-  // =========================
-  // ADMIN ROUTES
-  // =========================
-
+  // Admin
   {
     path: 'admin/dashboard',
     component: AdminDashboardComponent,
@@ -206,14 +173,9 @@ export const routes: Routes = [
     canActivate: [authGuard, adminGuard]
   },
 
-
-  // =========================
-  // 404 - MUST BE LAST
-  // =========================
-
   {
     path: '**',
-    component: NotFoundComponent
+    redirectTo: ''
   }
-
 ];
+

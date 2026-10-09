@@ -1,15 +1,17 @@
+// @ts-ignore Angular resolves this module through the project's configured dependencies.
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Admin } from '../../services/admin';
 
 @Component({
   selector: 'app-donation-management',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,DatePipe],
   templateUrl: './donation-management.html',
-  styleUrl: './donation-management.css'
+  styleUrls: ['./donation-management.css']
 })
-export class DonationManagement implements OnInit {
+export class DonationManagementComponent implements OnInit {
 
   donations: any[] = [];
   filterStatus = 'ALL';

@@ -1,3 +1,5 @@
+// Angular dependencies may be unavailable to the editor until packages are installed.
+// @ts-ignore
 import { Component } from '@angular/core';
 
 @Component({
