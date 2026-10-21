@@ -14,19 +14,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.EqualsAndHashCode;
-
 @Entity
 @Table(name = "food_items")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class FoodItem {
 
     @Id
@@ -44,7 +33,65 @@ public class FoodItem {
 
     @ManyToOne
     @JoinColumn(name = "donation_id", nullable = false)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private FoodDonation donation;
+
+    public FoodItem() {
+    }
+
+    public FoodItem(Long id, String name, BigDecimal quantity, String unit, FoodCategory category, FoodDonation donation) {
+        this.id = id;
+        this.name = name;
+        this.quantity = quantity;
+        this.unit = unit;
+        this.category = category;
+        this.donation = donation;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BigDecimal getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(BigDecimal quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public FoodCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(FoodCategory category) {
+        this.category = category;
+    }
+
+    public FoodDonation getDonation() {
+        return donation;
+    }
+
+    public void setDonation(FoodDonation donation) {
+        this.donation = donation;
+    }
 }

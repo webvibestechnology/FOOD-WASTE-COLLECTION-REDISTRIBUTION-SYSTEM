@@ -1,130 +1,219 @@
-<div class="container">
+<div class="admin-dashboard-container">
 
-  <h1>Admin Dashboard</h1>
+  <h1>Platform Administration & Operations Dashboard</h1>
 
-  <div class="stats">
+  <div class="stats-grid">
 
     <div class="stat-card">
-      <h3>Total Users</h3>
+      <h3>Total Platform Users</h3>
       <p>{{ stats.totalUsers || 0 }}</p>
     </div>
 
     <div class="stat-card">
-      <h3>Total Donors</h3>
+      <h3>Registered Donors</h3>
       <p>{{ stats.totalDonors || 0 }}</p>
     </div>
 
     <div class="stat-card">
-      <h3>Total NGOs</h3>
-      <p>{{ stats.totalNgos || 0 }}</p>
+      <h3>Verified Partner NGOs</h3>
+      <p>{{ stats.activeNgos || 0 }} / {{ stats.totalNgos || 0 }}</p>
     </div>
 
     <div class="stat-card">
-      <h3>Total Volunteers</h3>
-      <p>{{ stats.totalVolunteers || 0 }}</p>
+      <h3>Active Volunteers</h3>
+      <p>{{ stats.activeVolunteers || 0 }}</p>
     </div>
 
     <div class="stat-card">
-      <h3>Total Donations</h3>
+      <h3>Food Donations Listed</h3>
       <p>{{ stats.totalDonations || 0 }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Redistributions Completed</h3>
+      <p>{{ stats.totalPickups || 0 }}</p>
     </div>
 
   </div>
 
   <div class="quick-links">
 
-    <h2>Quick Actions</h2>
+    <h2>Management & Controls</h2>
 
-    <a routerLink="/admin/users">
-      User Management
-    </a>
+    <div class="links-grid">
 
-    <a routerLink="/admin/donations">
-      Donation Management
-    </a>
+      <a routerLink="/admin/users" class="quick-link-card">
+        <span class="icon">👥</span>
+        <span>User Accounts</span>
+      </a>
 
-    <a routerLink="/admin/ngos">
-      NGO Management
-    </a>
+      <a routerLink="/admin/donations" class="quick-link-card">
+        <span class="icon">🍱</span>
+        <span>Food Donations</span>
+      </a>
 
-    <a routerLink="/admin/volunteers">
-      Volunteer Management
-    </a>
+      <a routerLink="/admin/ngos" class="quick-link-card">
+        <span class="icon">🤝</span>
+        <span>NGO Verifications</span>
+      </a>
 
-    <a routerLink="/admin/reports">
-      Reports
-    </a>
+      <a routerLink="/admin/volunteers" class="quick-link-card">
+        <span class="icon">🚚</span>
+        <span>Volunteer Fleet</span>
+      </a>
+
+      <a routerLink="/admin/reports" class="quick-link-card">
+        <span class="icon">📊</span>
+        <span>Reports & CSV Export</span>
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- Audit Trail Section -->
+  <div class="section">
+    <h2>Administrative Audit Trail (Immutable Log)</h2>
+    @if (auditLogs.length > 0) {
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Administrator</th>
+              <th>Action</th>
+              <th>Target</th>
+              <th>Audit Log Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (log of auditLogs; track log.id) {
+              <tr>
+                <td>{{ log.timestamp | date:'short' }}</td>
+                <td><strong>{{ log.adminEmail }}</strong></td>
+                <td>
+                  <span class="status-badge" style="background: #e8f5e9; color: #1b5e20;">
+                    {{ log.action }}
+                  </span>
+                </td>
+                <td>{{ log.targetType }} #{{ log.targetId }}</td>
+                <td>{{ log.details }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p>No administrative audit logs recorded yet.</p>
+      </div>
+    }
+  </div>
+
+  <div class="section">
+
+    <h2>Recent Food Donations</h2>
+
+    @if (recentDonations.length > 0) {
+      <div class="table-container">
+        <table>
+
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Quantity</th>
+              <th>Category</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (donation of recentDonations; track donation.id) {
+              <tr>
+                <td><strong>{{ donation.title }}</strong></td>
+
+                <td>
+                  {{ donation.quantity }}
+                  {{ donation.quantityUnit }}
+                </td>
+
+                <td>{{ donation.category }}</td>
+
+                <td>
+                  <span
+                    class="status-badge"
+                    [class.status-pending]="donation.status === 'PENDING'"
+                    [class.status-accepted]="donation.status === 'ACCEPTED' || donation.status === 'AVAILABLE'"
+                    [class.status-delivered]="donation.status === 'DELIVERED' || donation.status === 'COMPLETED'"
+                  >
+                    {{ donation.status }}
+                  </span>
+                </td>
+              </tr>
+            }
+          </tbody>
+
+        </table>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p>No recent donations.</p>
+      </div>
+    }
 
   </div>
 
   <div class="section">
 
-    <h2>Recent Donations</h2>
+    <h2>Recent Collections & Deliveries</h2>
 
-    <table *ngIf="recentDonations.length > 0">
+    @if (recentPickups.length > 0) {
+      <div class="table-container">
+        <table>
 
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Quantity</th>
-          <th>Status</th>
-        </tr>
-      </thead>
+          <thead>
+            <tr>
+              <th>Food Item</th>
+              <th>Status</th>
+              <th>Volunteer</th>
+              <th>Scheduled Window</th>
+            </tr>
+          </thead>
 
-      <tbody>
+          <tbody>
+            @for (pickup of recentPickups; track pickup.id) {
+              <tr>
+                <td>
+                  <strong>{{ pickup.donationTitle || pickup.donation?.title || 'Food Donation' }}</strong>
+                </td>
 
-        <tr *ngFor="let donation of recentDonations">
+                <td>
+                  <span
+                    class="status-badge"
+                    [class.status-scheduled]="pickup.status === 'SCHEDULED'"
+                    [class.status-in-progress]="pickup.status === 'IN_PROGRESS'"
+                    [class.status-completed]="pickup.status === 'COMPLETED'"
+                  >
+                    {{ pickup.status }}
+                  </span>
+                </td>
 
-          <td>{{ donation.title }}</td>
+                <td>{{ pickup.volunteerName || 'Pending Assignment' }}</td>
 
-          <td>
-            {{ donation.quantity }}
-            {{ donation.quantityUnit }}
-          </td>
+                <td>
+                  {{ pickup.scheduledTime | date:'short' }}
+                </td>
+              </tr>
+            }
+          </tbody>
 
-          <td>{{ donation.status }}</td>
-
-        </tr>
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-  <div class="section">
-
-    <h2>Recent Pickups</h2>
-
-    <table *ngIf="recentPickups.length > 0">
-
-      <thead>
-        <tr>
-          <th>Food</th>
-          <th>Status</th>
-          <th>Scheduled Time</th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        <tr *ngFor="let pickup of recentPickups">
-
-          <td>
-            {{ pickup.donation?.title || 'Food Donation' }}
-          </td>
-
-          <td>{{ pickup.status }}</td>
-
-          <td>
-            {{ pickup.scheduledTime | date:'short' }}
-          </td>
-
-        </tr>
-
-      </tbody>
-
-    </table>
+        </table>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p>No recent pickups.</p>
+      </div>
+    }
 
   </div>
 

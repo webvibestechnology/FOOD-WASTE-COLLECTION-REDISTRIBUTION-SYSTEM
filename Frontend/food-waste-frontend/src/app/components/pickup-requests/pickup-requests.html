@@ -1,84 +1,155 @@
-<div class="container">
+<div class="pickup-requests-container">
 
-  <h1>Pickup Requests</h1>
+  <div class="page-header">
+    <h1>Food Collection & Redistribution Tasks</h1>
 
-  <div class="filter">
-
-    <label>Filter:</label>
-
-    <select [(ngModel)]="filterStatus">
-
-      <option value="">All</option>
-      <option value="SCHEDULED">Scheduled</option>
-      <option value="IN_PROGRESS">In Progress</option>
-      <option value="COMPLETED">Completed</option>
-      <option value="FAILED">Failed</option>
-
-    </select>
-
-  </div>
-
-  <div class="pickup-list">
-
-    <div
-      class="pickup-card"
-      *ngFor="let pickup of filteredPickups"
-    >
-
-      <h2>
-        {{ pickup.donation?.title || 'Food Pickup' }}
-      </h2>
-
-      <p>
-        <strong>Status:</strong>
-        {{ pickup.status }}
-      </p>
-
-      <p>
-        <strong>Scheduled:</strong>
-        {{ pickup.scheduledTime | date:'medium' }}
-      </p>
-
-      <a
-        [routerLink]="['/volunteer/pickup-details', pickup.id]"
-      >
-        View Details
-      </a>
-
-      <div class="buttons">
-
-        <button
-          *ngIf="pickup.status === 'SCHEDULED'"
-          (click)="updateStatus(pickup.id, 'IN_PROGRESS')"
-        >
-          Start Pickup
-        </button>
-
-        <button
-          *ngIf="pickup.status === 'IN_PROGRESS'"
-          (click)="updateStatus(pickup.id, 'COMPLETED')"
-        >
-          Mark Complete
-        </button>
-
-        <button
-          *ngIf="
-            pickup.status === 'SCHEDULED' ||
-            pickup.status === 'IN_PROGRESS'
-          "
-          (click)="updateStatus(pickup.id, 'FAILED')"
-        >
-          Report Failed
-        </button>
-
-      </div>
-
+    <div class="filter">
+      <label for="status">Status:</label>
+      <select id="status" [(ngModel)]="filterStatus">
+        <option value="">All Statuses</option>
+        <option value="SCHEDULED">Scheduled</option>
+        <option value="IN_PROGRESS">In Progress</option>
+        <option value="COLLECTED">Collected</option>
+        <option value="COMPLETED">Completed</option>
+        <option value="FAILED">Failed</option>
+      </select>
     </div>
-
   </div>
 
-  <p *ngIf="filteredPickups.length === 0">
-    No pickup requests found.
-  </p>
+  <div class="tab-nav">
+    <button class="tab-btn" [class.active]="activeTab === 'my'" (click)="setTab('my')">
+      My Assigned Tasks ({{ myPickups.length }})
+    </button>
+    <button class="tab-btn" [class.active]="activeTab === 'available'" (click)="setTab('available')">
+      Available to Claim ({{ availablePickups.length }})
+    </button>
+  </div>
+
+  @if (successMessage) {
+    <div class="alert-box alert-success">
+      ✅ {{ successMessage }}
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert-box alert-error">
+      ⚠️ {{ errorMessage }}
+    </div>
+  }
+
+  @if (isLoading) {
+    <div class="empty-state">
+      <p>Loading collection tasks...</p>
+    </div>
+  } @else if (displayedPickups.length === 0) {
+    <div class="empty-state">
+      <p>{{ activeTab === 'my' ? 'No assigned tasks match your filter.' : 'No open pickup tasks waiting for volunteer assignment.' }}</p>
+    </div>
+  } @else {
+    <div class="pickup-list">
+      @for (pickup of displayedPickups; track pickup.id) {
+        <div class="pickup-card">
+          <div class="card-header">
+            <h2>{{ pickup.donationTitle || pickup.donation?.title || 'Surplus Food' }}</h2>
+            <span
+              class="status-badge"
+              [class.status-scheduled]="pickup.status === 'SCHEDULED'"
+              [class.status-in-progress]="pickup.status === 'IN_PROGRESS'"
+              [class.status-collected]="pickup.status === 'COLLECTED'"
+              [class.status-completed]="pickup.status === 'COMPLETED'"
+              [class.status-failed]="pickup.status === 'FAILED'"
+            >
+              {{ pickup.status }}
+            </span>
+          </div>
+
+          <div class="card-body">
+            <p>
+              <strong>Quantity:</strong>
+              {{ pickup.quantity || pickup.donation?.quantity || '-' }}
+              {{ pickup.quantityUnit || pickup.donation?.quantityUnit || '' }}
+            </p>
+
+            <p>
+              <strong>Pickup Location:</strong>
+              📍 {{ pickup.pickupAddress || pickup.donation?.pickupAddress || 'Address on file' }}
+            </p>
+
+            @if (pickup.deliveryAddress) {
+              <p>
+                <strong>Destination:</strong>
+                🏢 {{ pickup.deliveryAddress }}
+              </p>
+            }
+
+            <p>
+              <strong>Scheduled Window:</strong>
+              {{ pickup.scheduledTime | date:'medium' }}
+            </p>
+
+            @if (pickup.donorName || pickup.donor?.name) {
+              <p>
+                <strong>Donor:</strong>
+                {{ pickup.donorName || pickup.donor?.name }}
+              </p>
+            }
+
+            @if (pickup.ngoName || pickup.ngo?.name) {
+              <p>
+                <strong>Recipient NGO:</strong>
+                {{ pickup.ngoName || pickup.ngo?.name }}
+              </p>
+            }
+          </div>
+
+          <div class="card-actions">
+            @if (activeTab === 'available') {
+              <button class="claim-button" (click)="claimPickup(pickup.id)">
+                🤝 Claim This Collection Task
+              </button>
+            }
+
+            <a
+              [routerLink]="['/volunteer/pickups', pickup.id]"
+              class="view-button"
+            >
+              View Full Details & Manage Status →
+            </a>
+
+            @if (activeTab === 'my') {
+              <div class="action-buttons">
+                @if (pickup.status === 'SCHEDULED') {
+                  <button
+                    class="action-button start"
+                    (click)="updateStatus(pickup.id, 'IN_PROGRESS')"
+                  >
+                    Start En Route
+                  </button>
+                }
+
+                @if (pickup.status === 'IN_PROGRESS') {
+                  <button
+                    class="action-button collect"
+                    (click)="updateStatus(pickup.id, 'COLLECTED')"
+                  >
+                    Confirm Collected
+                  </button>
+                }
+
+                @if (pickup.status === 'COLLECTED') {
+                  <button
+                    class="action-button complete"
+                    (click)="updateStatus(pickup.id, 'COMPLETED')"
+                  >
+                    Complete Delivery
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
 
 </div>

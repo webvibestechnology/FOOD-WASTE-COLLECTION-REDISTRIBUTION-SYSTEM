@@ -91,6 +91,125 @@
 }
 
 
+.stats-section {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+  color: white;
+}
+
+.stats-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+  min-width: 150px;
+}
+
+.stat-number {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.stat-label {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+
+.impact-section {
+  padding: 60px 20px;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.impact-section h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+.impact-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.impact-card {
+  width: 300px;
+  padding: 30px 20px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.impact-card h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #4caf50;
+}
+
+.impact-card p {
+  line-height: 1.6;
+}
+
+
+.cta-section {
+  padding: 80px 20px;
+  background: #1b5e20;
+  color: white;
+  text-align: center;
+}
+
+.cta-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cta-section h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.cta-section p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.cta-section .cta-button {
+  background: white;
+  color: #1b5e20;
+}
+
+.cta-section .cta-button.secondary {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.cta-section .cta-button:hover {
+  opacity: 0.9;
+}
+
+
 @media (max-width: 600px) {
 
   .hero h1 {
@@ -108,6 +227,31 @@
   .feature-card {
     width: 100%;
     max-width: 350px;
+  }
+
+  .stat-number {
+    font-size: 32px;
+  }
+
+  .stat-label {
+    font-size: 14px;
+  }
+
+  .impact-section h2 {
+    font-size: 26px;
+  }
+
+  .impact-card {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .cta-section h2 {
+    font-size: 28px;
+  }
+
+  .cta-section p {
+    font-size: 16px;
   }
 
 }

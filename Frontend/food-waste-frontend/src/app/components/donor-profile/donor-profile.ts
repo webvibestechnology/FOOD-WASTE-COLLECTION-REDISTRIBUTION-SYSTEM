@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 
 // Angular dependencies are resolved by the Angular build; suppress editor-only
 // diagnostics when this file is opened outside the workspace context.
 // @ts-nocheck
+=======
+>>>>>>> 64475a0 (complete)
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -114,4 +117,7 @@ export class DonorProfileComponent implements OnInit {
     this.successMessage = '';
   }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 64475a0 (complete)

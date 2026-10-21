@@ -1,6 +1,7 @@
 import { Component, type OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { Donation } from '../../services/donation';
 
 @Component({
@@ -9,7 +10,8 @@ import { Donation } from '../../services/donation';
   imports: [
     CommonModule,
     FormsModule,
-    DatePipe
+    DatePipe,
+    CommonModule
   ],
   templateUrl: './donation-history.html',
   styleUrl: './donation-history.css'

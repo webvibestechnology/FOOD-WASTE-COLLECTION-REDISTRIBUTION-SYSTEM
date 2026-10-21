@@ -1,17 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 
-import { AvailableFood } from './available-food';
+import { AvailableFoodComponent } from './available-food';
 
-describe('AvailableFood', () => {
-  let component: AvailableFood;
-  let fixture: ComponentFixture<AvailableFood>;
+describe('AvailableFoodComponent', () => {
+  let component: AvailableFoodComponent;
+  let fixture: ComponentFixture<AvailableFoodComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AvailableFood],
+      imports: [AvailableFoodComponent],
+      providers: [provideHttpClient(), provideRouter([])]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AvailableFood);
+    fixture = TestBed.createComponent(AvailableFoodComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

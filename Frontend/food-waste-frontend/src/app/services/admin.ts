@@ -48,4 +48,10 @@ export class Admin {
       `${this.baseUrl}/pickups`
     );
   }
+
+  getAuditLogs(): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/audit-logs`
+    );
+  }
 }

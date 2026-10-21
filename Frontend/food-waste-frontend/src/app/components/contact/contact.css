@@ -1,28 +1,67 @@
 .contact-container {
-  min-height: 70vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 30px 20px;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.contact-card {
-  width: 100%;
-  max-width: 600px;
+.contact-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.contact-header h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.contact-header p {
+  font-size: 18px;
+  color: #666;
+}
+
+.contact-content {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.contact-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+.info-card {
+  padding: 25px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.info-card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #4caf50;
+  font-size: 20px;
+}
+
+.info-card p {
+  line-height: 1.6;
+  margin: 0;
+}
+
+.contact-form-card {
+  flex: 1;
+  min-width: 300px;
   padding: 35px;
   background: white;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
-.contact-card h1 {
+.contact-form-card h2 {
+  margin-top: 0;
+  margin-bottom: 25px;
   text-align: center;
-  margin-bottom: 10px;
-}
-
-.contact-card > p {
-  text-align: center;
-  margin-bottom: 30px;
 }
 
 .form-group {
@@ -58,6 +97,11 @@ button {
   color: white;
   font-size: 16px;
   cursor: pointer;
+  font-weight: 600;
+}
+
+button:hover {
+  background: #388e3c;
 }
 
 .success-message {
@@ -67,4 +111,17 @@ button {
   color: #2e7d32;
   text-align: center;
   border-radius: 5px;
+}
+
+
+@media (max-width: 768px) {
+
+  .contact-content {
+    flex-direction: column;
+  }
+
+  .contact-header h1 {
+    font-size: 32px;
+  }
+
 }

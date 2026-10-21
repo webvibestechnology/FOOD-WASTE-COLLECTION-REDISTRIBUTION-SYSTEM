@@ -7,23 +7,29 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../../services/auth';
+<<<<<<< HEAD
 import { ErrorAlert } from '../../shared error alert/error-alert/error-alert';
+=======
+>>>>>>> 64475a0 (complete)
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    RouterLink,
-    ErrorAlert
+    RouterLink
   ],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
 export class LoginComponent {
 
+<<<<<<< HEAD
   loginForm!: FormGroup;
 
+=======
+  loginForm: any;
+>>>>>>> 64475a0 (complete)
   errorMessage: string = '';
   isLoading: boolean = false;
 

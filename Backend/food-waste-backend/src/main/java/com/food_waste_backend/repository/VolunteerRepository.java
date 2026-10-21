@@ -4,12 +4,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.food_waste_backend.Entity.Volunteer;
 
 public interface VolunteerRepository extends JpaRepository<Volunteer, Long> {
 
     Optional<Volunteer> findByUserId(Long userId);
+
+    @Query("SELECT v FROM Volunteer v WHERE v.user.email = :email")
+    Optional<Volunteer> findByUserEmail(String email);
 
     List<Volunteer> findByAvailableTrue();
 }

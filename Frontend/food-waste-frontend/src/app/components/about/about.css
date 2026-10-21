@@ -42,4 +42,48 @@
 
 .role-section h3 {
   margin-top: 0;
+  color: #4caf50;
+}
+
+
+.benefits-container {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.benefit-card {
+  width: 280px;
+  padding: 25px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.benefit-card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #4caf50;
+  font-size: 20px;
+}
+
+.benefit-card p {
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+
+@media (max-width: 600px) {
+
+  .about-hero h1 {
+    font-size: 32px;
+  }
+
+  .benefit-card {
+    width: 100%;
+    max-width: 350px;
+  }
+
 }

@@ -1,3 +1,37 @@
-node_modules/ 
-.angular/ 
-dist/ 
+# Node modules and build artifacts
+node_modules/
+.angular/
+dist/
+
+# Backend build artifacts
+Backend/food-waste-backend/target/
+Backend/food-waste-backend/.mvn/
+Backend/food-waste-backend/mvnw
+Backend/food-waste-backend/mvnw.cmd
+
+# Environment files with secrets
+.env
+.env.local
+.env.*.local
+application-dev.properties
+application-local.properties
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+ 

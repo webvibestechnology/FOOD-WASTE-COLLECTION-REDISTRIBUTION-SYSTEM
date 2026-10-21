@@ -1,17 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 
-import { NgoDashboard } from './ngo-dashboard';
+import { NgoDashboardComponent } from './ngo-dashboard';
 
-describe('NgoDashboard', () => {
-  let component: NgoDashboard;
-  let fixture: ComponentFixture<NgoDashboard>;
+describe('NgoDashboardComponent', () => {
+  let component: NgoDashboardComponent;
+  let fixture: ComponentFixture<NgoDashboardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NgoDashboard],
+      imports: [NgoDashboardComponent],
+      providers: [provideHttpClient(), provideRouter([])]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NgoDashboard);
+    fixture = TestBed.createComponent(NgoDashboardComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

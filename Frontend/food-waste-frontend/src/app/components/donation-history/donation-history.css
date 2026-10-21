@@ -80,6 +80,11 @@ tr:last-child td {
   color: #0c5460;
 }
 
+.status-available {
+  background: #cce5ff;
+  color: #004085;
+}
+
 .status-picked-up {
   background: #e2d9f3;
   color: #4a3f6b;
@@ -90,6 +95,16 @@ tr:last-child td {
   color: #155724;
 }
 
+.status-completed {
+  background: #28a745;
+  color: white;
+}
+
+.status-distributed {
+  background: #5cb85c;
+  color: white;
+}
+
 .status-cancelled {
   background: #f8d7da;
   color: #721c24;
@@ -98,6 +113,11 @@ tr:last-child td {
 .status-expired {
   background: #e2e3e5;
   color: #383d41;
+}
+
+.status-rejected {
+  background: #dc3545;
+  color: white;
 }
 
 .empty-state {

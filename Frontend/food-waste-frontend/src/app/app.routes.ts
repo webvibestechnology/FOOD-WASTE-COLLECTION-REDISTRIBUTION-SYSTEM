@@ -10,11 +10,16 @@ import { ContactComponent } from './components/contact/contact';
 
 import { NotificationsComponent } from './components/notifications/notifications';
 
+<<<<<<< HEAD
+=======
+// Donor Components
+>>>>>>> 64475a0 (complete)
 import { DonorDashboardComponent } from './components/donor-dashboard/donor-dashboard';
 import { DonorProfileComponent } from './components/donor-profile/donor-profile';
 import { FoodDonationComponent } from './components/food-donation/food-donation';
 import { DonationHistoryComponent } from './components/donation-history/donation-history';
 
+<<<<<<< HEAD
 import { NgoDashboardComponent } from './components/ngo-dashboard/ngo-dashboard';
 import { FoodRequestComponent } from './components/food-request/food-request';
 import { AvailableFoodComponent } from './components/available-food/available-food';
@@ -23,18 +28,36 @@ import { VolunteerDashboardComponent } from './components/volunteer-dashboard/vo
 import { PickupRequestsComponent } from './components/pickup-requests/pickup-requests';
 import { PickupDetailsComponent } from './components/pickup-details/pickup-details';
 
+=======
+// NGO Components
+import { NgoDashboardComponent } from './components/ngo-dashboard/ngo-dashboard';
+import { FoodRequestComponent } from './components/food-request/food-request';
+import { AvailableFoodComponent } from './components/available-food/available-food';
+import { NgoProfileComponent } from './components/ngo-profile/ngo-profile';
+
+// Volunteer Components
+import { VolunteerDashboardComponent } from './components/volunteer-dashboard/volunteer-dashboard';
+import { PickupRequestsComponent } from './components/pickup-requests/pickup-requests';
+import { PickupDetailsComponent } from './components/pickup-details/pickup-details';
+import { VolunteerProfileComponent } from './components/volunteer-profile/volunteer-profile';
+
+// Admin Components
+>>>>>>> 64475a0 (complete)
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard';
 import { UserManagementComponent } from './components/user-management/user-management';
 import { DonationManagementComponent } from './components/donation-management/donation-management';
 import { NgoManagementComponent } from './components/ngo-management/ngo-management';
 import { VolunteerManagementComponent } from './components/volunteer-management/volunteer-management';
 import { ReportsComponent } from './components/reports/reports';
+<<<<<<< HEAD
 
 import { authGuard } from './guards/auth-guard';
 import { adminGuard } from './guards/admin-guard';
 import { donorGuard } from './guards/donor-guard';
 import { ngoGuard } from './guards/ngo-guard';
 import { volunteerGuard } from './guards/volunteer-guard';
+=======
+>>>>>>> 64475a0 (complete)
 
 export const routes: Routes = [
   {
@@ -106,9 +129,25 @@ export const routes: Routes = [
   },
 
   {
+<<<<<<< HEAD
     path: 'ngo/food-request',
+=======
+    path: 'ngo/profile',
+    component: NgoProfileComponent,
+    canActivate: [authGuard, ngoGuard]
+  },
+
+  {
+    path: 'ngo/requests',
+>>>>>>> 64475a0 (complete)
     component: FoodRequestComponent,
     canActivate: [authGuard, ngoGuard]
+  },
+
+  {
+    path: 'ngo/food-requests',
+    redirectTo: 'ngo/requests',
+    pathMatch: 'full'
   },
 
   {
@@ -117,7 +156,21 @@ export const routes: Routes = [
     canActivate: [authGuard, ngoGuard]
   },
 
+<<<<<<< HEAD
   // Volunteer
+=======
+  {
+    path: 'ngo/pickups',
+    redirectTo: 'ngo/requests',
+    pathMatch: 'full'
+  },
+
+
+  // =========================
+  // VOLUNTEER ROUTES
+  // =========================
+
+>>>>>>> 64475a0 (complete)
   {
     path: 'volunteer/dashboard',
     component: VolunteerDashboardComponent,
@@ -125,18 +178,51 @@ export const routes: Routes = [
   },
 
   {
+<<<<<<< HEAD
     path: 'volunteer/pickup-requests',
+=======
+    path: 'volunteer/profile',
+    component: VolunteerProfileComponent,
+    canActivate: [authGuard, volunteerGuard]
+  },
+
+  {
+    path: 'volunteer/pickups',
+>>>>>>> 64475a0 (complete)
     component: PickupRequestsComponent,
     canActivate: [authGuard, volunteerGuard]
   },
 
   {
+<<<<<<< HEAD
     path: 'volunteer/pickup-details/:id',
+=======
+    path: 'volunteer/pickup-requests',
+    redirectTo: 'volunteer/pickups',
+    pathMatch: 'full'
+  },
+
+  {
+    path: 'volunteer/pickups/:id',
+>>>>>>> 64475a0 (complete)
     component: PickupDetailsComponent,
     canActivate: [authGuard, volunteerGuard]
   },
 
+<<<<<<< HEAD
   // Admin
+=======
+  {
+    path: 'volunteer/pickup-details/:id',
+    redirectTo: 'volunteer/pickups/:id'
+  },
+
+
+  // =========================
+  // ADMIN ROUTES
+  // =========================
+
+>>>>>>> 64475a0 (complete)
   {
     path: 'admin/dashboard',
     component: AdminDashboardComponent,
@@ -179,3 +265,7 @@ export const routes: Routes = [
   }
 ];
 
+<<<<<<< HEAD
+=======
+];
+>>>>>>> 64475a0 (complete)

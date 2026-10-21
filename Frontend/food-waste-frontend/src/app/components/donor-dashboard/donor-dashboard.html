@@ -9,63 +9,210 @@
     </a>
   </div>
 
-  <!-- REPLACE THE OLD LOADING BLOCK HERE -->
+  @if (actionMessage) {
+    <div class="alert-box alert-success">
+      ✅ {{ actionMessage }}
+    </div>
+  }
+
+  @if (actionError) {
+    <div class="alert-box alert-error">
+      ⚠️ {{ actionError }}
+    </div>
+  }
+
   <app-loading-spinner [isLoading]="isLoading"></app-loading-spinner>
 
   @if (!isLoading) {
     <!-- Statistics -->
     <div class="stats-container">
-      <div class="stat-card">
-        <h3>Total Donations</h3>
-        <div class="stat-number">{{ totalDonations }}</div>
+      <div class="stat-card stat-primary">
+        <div class="stat-icon">📦</div>
+        <div class="stat-content">
+          <h3>Total Donations</h3>
+          <div class="stat-number">{{ totalDonations }}</div>
+          <p class="stat-label">All time donations</p>
+        </div>
       </div>
-      <div class="stat-card">
-        <h3>Active Donations</h3>
-        <div class="stat-number">{{ activeDonations.length }}</div>
+      <div class="stat-card stat-warning">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-content">
+          <h3>Pending Requests</h3>
+          <div class="stat-number">{{ pendingIncomingRequests.length }}</div>
+          <p class="stat-label">Awaiting your approval</p>
+        </div>
       </div>
-      <div class="stat-card">
-        <h3>Delivered Donations</h3>
-        <div class="stat-number">{{ deliveredDonations.length }}</div>
+      <div class="stat-card stat-success">
+        <div class="stat-icon">✅</div>
+        <div class="stat-content">
+          <h3>Accepted / Allocated</h3>
+          <div class="stat-number">{{ acceptedDonations.length }}</div>
+          <p class="stat-label">Allocated to NGOs</p>
+        </div>
+      </div>
+      <div class="stat-card stat-info">
+        <div class="stat-icon">🚚</div>
+        <div class="stat-content">
+          <h3>Delivered</h3>
+          <div class="stat-number">{{ deliveredDonations.length }}</div>
+          <p class="stat-label">Successfully redistributed</p>
+        </div>
       </div>
     </div>
 
+    <!-- Incoming NGO Requests Section -->
+    <section class="requests-section">
+      <div class="section-header">
+        <h2>Incoming NGO Food Requests</h2>
+        <span class="status-badge status-pending">{{ pendingIncomingRequests.length }} Pending Decision</span>
+      </div>
+
+      @if (incomingRequests.length > 0) {
+        <table class="requests-table">
+          <thead>
+            <tr>
+              <th>Food Listing</th>
+              <th>NGO Organization</th>
+              <th>Requested Qty</th>
+              <th>Beneficiaries</th>
+              <th>Redistribution Plan</th>
+              <th>Status</th>
+              <th>Decision</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (req of incomingRequests; track req.id) {
+              <tr>
+                <td><strong>{{ req.donation?.title || 'Food Donation' }}</strong></td>
+                <td>{{ req.ngo?.organizationName || req.ngo?.user?.name || 'Verified NGO' }}</td>
+                <td>{{ req.requestedQuantity || req.donation?.quantity }} {{ req.donation?.quantityUnit }}</td>
+                <td>{{ req.beneficiaryCount ? (req.beneficiaryCount + ' people') : 'Community' }}</td>
+                <td>{{ req.notes || req.deliveryNotes || '-' }}</td>
+                <td>
+                  <span
+                    class="status-badge"
+                    [class.status-pending]="req.status === 'PENDING'"
+                    [class.status-accepted]="req.status === 'ACCEPTED' || req.status === 'APPROVED'"
+                    [class.status-rejected]="req.status === 'REJECTED' || req.status === 'CANCELLED'"
+                  >
+                    {{ req.status }}
+                  </span>
+                </td>
+                <td>
+                  @if (req.status === 'PENDING') {
+                    <div class="req-actions">
+                      <button
+                        class="btn-approve"
+                        [disabled]="processingRequestId === req.id"
+                        (click)="approveRequest(req.id)"
+                      >
+                        {{ processingRequestId === req.id ? '...' : 'Approve' }}
+                      </button>
+                      <button
+                        class="btn-reject"
+                        [disabled]="processingRequestId === req.id"
+                        (click)="rejectRequest(req.id)"
+                      >
+                        {{ processingRequestId === req.id ? '...' : 'Decline' }}
+                      </button>
+                    </div>
+                  } @else {
+                    <span style="color: #666; font-size: 13px;">Decision recorded</span>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      } @else {
+        <div class="empty-state">
+          <div class="empty-icon">🤝</div>
+          <h3>No food requests yet</h3>
+          <p>When verified NGOs request food from your donations, their requests will appear here for your review and allocation.</p>
+        </div>
+      }
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="quick-actions">
+      <h2>Quick Actions</h2>
+      <div class="action-buttons">
+        <a routerLink="/donor/donate" class="action-card">
+          <div class="action-icon">➕</div>
+          <h3>Create Donation</h3>
+          <p>Add new food donation</p>
+        </a>
+        <a routerLink="/donor/history" class="action-card">
+          <div class="action-icon">📋</div>
+          <h3>View History</h3>
+          <p>See all your donations</p>
+        </a>
+        <a routerLink="/donor/profile" class="action-card">
+          <div class="action-icon">👤</div>
+          <h3>My Profile</h3>
+          <p>Update your profile</p>
+        </a>
+        <a routerLink="/available-food" class="action-card">
+          <div class="action-icon">🔍</div>
+          <h3>Browse Food</h3>
+          <p>View available donations</p>
+        </a>
+      </div>
+    </section>
+
     <!-- Recent Donations -->
     <section class="recent-section">
-      <h2>Recent Donations</h2>
+      <div class="section-header">
+        <h2>Recent Donations</h2>
+        <a routerLink="/donor/history" class="view-all-link">View All →</a>
+      </div>
       @if (recentDonations.length > 0) {
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Status</th>
-                <th>Expiry Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (donation of recentDonations; track donation.id) {
-                <tr>
-                  <td>{{ donation.title }}</td>
-                  <td>{{ donation.category }}</td>
-                  <td>
-                    <span
-                      class="status-badge"
-                      [class.status-pending]="donation.status === 'PENDING'"
-                      [class.status-accepted]="donation.status === 'ACCEPTED'"
-                      [class.status-delivered]="donation.status === 'DELIVERED'"
-                    >
-                      {{ donation.status }}
-                    </span>
-                  </td>
-                  <td>{{ donation.expiryTime | date:'medium' }}</td>
-                </tr>
-              }
-            </tbody>
-          </table>
+        <div class="donation-grid">
+          @for (donation of recentDonations; track donation.id) {
+            <div class="donation-card">
+              <div class="donation-header">
+                <h3>{{ donation.title }}</h3>
+                <span
+                  class="status-badge"
+                  [class.status-pending]="donation.status === 'PENDING'"
+                  [class.status-accepted]="donation.status === 'ACCEPTED' || donation.status === 'AVAILABLE' || donation.status === 'PARTIALLY_ALLOCATED'"
+                  [class.status-delivered]="donation.status === 'DELIVERED' || donation.status === 'COMPLETED'"
+                  [class.status-rejected]="donation.status === 'REJECTED' || donation.status === 'CANCELLED'"
+                >
+                  {{ donation.status }}
+                </span>
+              </div>
+              <div class="donation-details">
+                <div class="detail-item">
+                  <span class="detail-label">Category:</span>
+                  <span class="detail-value">{{ donation.category }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Quantity:</span>
+                  <span class="detail-value">{{ donation.quantity }} {{ donation.quantityUnit }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Allocated:</span>
+                  <span class="detail-value">{{ donation.allocatedQuantity || 0 }} {{ donation.quantityUnit }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Expiry:</span>
+                  <span class="detail-value">{{ donation.expiryTime | date:'short' }}</span>
+                </div>
+              </div>
+              <div class="donation-footer">
+                <a routerLink="/donor/history" class="card-action">View Details</a>
+              </div>
+            </div>
+          }
         </div>
       } @else {
-        <div class="empty-state">No donations found.</div>
+        <div class="empty-state">
+          <div class="empty-icon">📦</div>
+          <h3>No donations yet</h3>
+          <p>Start making a difference by donating food today!</p>
+          <a routerLink="/donor/donate" class="create-button">Create Your First Donation</a>
+        </div>
       }
     </section>
   }

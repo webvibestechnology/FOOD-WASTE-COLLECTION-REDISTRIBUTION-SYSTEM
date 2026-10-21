@@ -1,0 +1,91 @@
+<div class="profile-container">
+
+  <div class="profile-card">
+    <div class="profile-header">
+      <div>
+        <h1>Volunteer Operations Profile</h1>
+        <p>Manage your transport equipment, service region, and availability.</p>
+      </div>
+      <button class="edit-toggle-btn" (click)="toggleEdit()">
+        {{ isEditing ? 'Cancel Edit' : '✏️ Edit Profile' }}
+      </button>
+    </div>
+
+    @if (successMessage) {
+      <div class="alert-box alert-success">✅ {{ successMessage }}</div>
+    }
+    @if (errorMessage) {
+      <div class="alert-box alert-error">⚠️ {{ errorMessage }}</div>
+    }
+
+    <div class="status-banner" [class.on-duty]="profile?.available">
+      <div class="badge-icon">{{ profile?.available ? '🟢' : '⏸️' }}</div>
+      <div>
+        <strong>Status: {{ profile?.available ? 'Active & Ready to Accept Collection Tasks' : 'Off Duty / Inactive' }}</strong>
+        <p>{{ profile?.available ? 'Platform dispatches collection tasks based on your operating area.' : 'You will not receive new collection task dispatches until toggled active.' }}</p>
+      </div>
+    </div>
+
+    @if (!isEditing) {
+      <div class="details-grid">
+        <div class="detail-box">
+          <label>Volunteer Name</label>
+          <span>{{ profile?.volunteerName || profile?.name || 'Registered Volunteer' }}</span>
+        </div>
+        <div class="detail-box">
+          <label>Contact Phone</label>
+          <span>{{ profile?.phone || 'Not provided' }}</span>
+        </div>
+        <div class="detail-box">
+          <label>Vehicle / Transport Equipment</label>
+          <span>{{ profile?.vehicleType || 'Not specified' }}</span>
+        </div>
+        <div class="detail-box">
+          <label>Designated Operating Area</label>
+          <span>{{ profile?.operatingArea || 'Not specified' }}</span>
+        </div>
+      </div>
+    } @else {
+      <form [formGroup]="profileForm" (ngSubmit)="onSave()" class="edit-form">
+        <div class="form-group">
+          <label for="vphone">Contact Phone Number *</label>
+          <input id="vphone" type="tel" formControlName="phone" />
+        </div>
+
+        <div class="form-group">
+          <label for="vehicle">Vehicle / Transport Equipment *</label>
+          <select id="vehicle" formControlName="vehicleType">
+            <option value="Bicycle with thermal box">Bicycle with thermal box</option>
+            <option value="Motorcycle with carrier">Motorcycle with carrier</option>
+            <option value="Standard Car">Standard Car (Hatchback/Sedan)</option>
+            <option value="SUV / Station Wagon">SUV / Station Wagon</option>
+            <option value="Cargo Van">Cargo Van</option>
+            <option value="Van (Temperature-Controlled)">Van (Temperature-Controlled)</option>
+            <option value="Refrigerated Truck">Refrigerated Truck</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="area">Primary Operating Area / Districts *</label>
+          <input id="area" type="text" formControlName="operatingArea" placeholder="e.g. Metro Central, North District" />
+        </div>
+
+        <div class="form-group">
+          <label for="avail">Duty Status</label>
+          <select id="avail" formControlName="available">
+            <option [ngValue]="true">Active & Ready for Pickups</option>
+            <option [ngValue]="false">Off Duty</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="toggleEdit()">Cancel</button>
+          <button type="submit" class="btn-save" [disabled]="isLoading">
+            {{ isLoading ? 'Saving...' : 'Save Operations Profile' }}
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+
+</div>

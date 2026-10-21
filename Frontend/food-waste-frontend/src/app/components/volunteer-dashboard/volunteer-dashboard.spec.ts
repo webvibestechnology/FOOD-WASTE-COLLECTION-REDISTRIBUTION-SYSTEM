@@ -1,17 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 
-import { VolunteerDashboard } from './volunteer-dashboard';
+import { VolunteerDashboardComponent } from './volunteer-dashboard';
 
-describe('VolunteerDashboard', () => {
-  let component: VolunteerDashboard;
-  let fixture: ComponentFixture<VolunteerDashboard>;
+describe('VolunteerDashboardComponent', () => {
+  let component: VolunteerDashboardComponent;
+  let fixture: ComponentFixture<VolunteerDashboardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VolunteerDashboard],
+      imports: [VolunteerDashboardComponent],
+      providers: [provideHttpClient(), provideRouter([])]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(VolunteerDashboard);
+    fixture = TestBed.createComponent(VolunteerDashboardComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

@@ -1,70 +1,175 @@
-<div class="container">
+<div class="available-food-container">
 
-  <h1>Available Food</h1>
+  <div class="page-header">
+    <h1>Available Food Donations</h1>
 
-  <div class="filter">
-    <label>Filter by Category:</label>
+    <div class="filter-controls">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="🔍 Search food, diet, location..."
+        [(ngModel)]="searchTerm"
+      />
 
-    <select [(ngModel)]="filterCategory">
-      <option value="">All Categories</option>
-      <option value="VEGETARIAN">Vegetarian</option>
-      <option value="NON_VEGETARIAN">Non Vegetarian</option>
-      <option value="PACKAGED">Packaged</option>
-      <option value="BAKERY">Bakery</option>
-      <option value="FRUITS">Fruits</option>
-      <option value="VEGETABLES">Vegetables</option>
-    </select>
+      <div class="filter">
+        <select
+          id="category"
+          [(ngModel)]="filterCategory"
+        >
+          <option value="">All Categories</option>
+          <option value="COOKED_FOOD">Cooked Food</option>
+          <option value="RAW_VEGETABLES">Raw Vegetables</option>
+          <option value="FRUITS">Fruits</option>
+          <option value="BAKERY">Bakery</option>
+          <option value="DAIRY">Dairy</option>
+          <option value="PACKAGED">Packaged</option>
+          <option value="OTHER">Other</option>
+        </select>
+      </div>
+    </div>
   </div>
 
-  <div
-    class="success"
-    *ngIf="successMessage"
-  >
-    {{ successMessage }}
-  </div>
+  @if (successMessage) {
+    <div class="success-message">
+      {{ successMessage }}
+    </div>
+  }
 
-  <div class="food-grid">
+  @if (isLoading) {
+    <div class="empty-state">
+      <p>Loading available food donations...</p>
+    </div>
+  } @else if (filteredDonations.length === 0) {
+    <div class="empty-state">
+      <p>No available food donations match your criteria at this moment.</p>
+    </div>
+  } @else {
+    <div class="food-grid">
 
-    <div
-      class="food-card"
-      *ngFor="let donation of filteredDonations"
-    >
+      @for (donation of filteredDonations; track donation.id) {
+        <div class="food-card">
 
-      <h2>{{ donation.title }}</h2>
+          <div class="card-header">
+            <h2>{{ donation.title }}</h2>
+            <span
+              class="status-badge"
+              [class.status-pending]="donation.status === 'PENDING'"
+              [class.status-available]="donation.status === 'AVAILABLE' || donation.status === 'PARTIALLY_ALLOCATED'"
+            >
+              {{ donation.status }}
+            </span>
+          </div>
 
-      <p>
-        <strong>Description:</strong>
-        {{ donation.description }}
-      </p>
+          <!-- Food Safety & Dietary Tags -->
+          <div class="tags-row">
+            @if (donation.dietaryInfo) {
+              <span class="tag tag-diet">🌱 {{ donation.dietaryInfo }}</span>
+            }
+            @if (donation.storageRequirements) {
+              <span class="tag tag-storage">❄️ {{ donation.storageRequirements }}</span>
+            }
+            @if (donation.allergens && donation.allergens.toLowerCase() !== 'none') {
+              <span class="tag tag-allergen">⚠️ Allergens: {{ donation.allergens }}</span>
+            }
+          </div>
 
-      <p>
-        <strong>Quantity:</strong>
-        {{ donation.quantity }}
-        {{ donation.quantityUnit }}
-      </p>
+          <div class="card-body">
+            @if (donation.description) {
+              <p><strong>Details:</strong> {{ donation.description }}</p>
+            }
 
-      <p>
-        <strong>Category:</strong>
-        {{ donation.category }}
-      </p>
+            <div class="quantity-highlight">
+              <span>Remaining Available:</span>
+              <span class="remaining-val">
+                {{ getRemainingQuantity(donation) }} / {{ donation.quantity }} {{ donation.quantityUnit }}
+              </span>
+            </div>
 
-      <p>
-        <strong>Status:</strong>
-        {{ donation.status }}
-      </p>
+            @if (donation.safeUseDeadline) {
+              <p><strong>Safe-Use Deadline:</strong> {{ donation.safeUseDeadline | date:'medium' }}</p>
+            } @else {
+              <p><strong>Expires:</strong> {{ donation.expiryTime | date:'medium' }}</p>
+            }
 
-      <button
-        (click)="requestDonation(donation.id)"
-      >
-        Request Food
-      </button>
+            @if (donation.pickupAddress) {
+              <p><strong>Pickup Location:</strong> 📍 {{ donation.pickupAddress }}</p>
+            }
+          </div>
+
+          <button
+            (click)="openRequestModal(donation)"
+            class="request-button"
+            [disabled]="getRemainingQuantity(donation) <= 0"
+          >
+            {{ getRemainingQuantity(donation) <= 0 ? 'Fully Allocated' : 'Request for Redistribution' }}
+          </button>
+
+        </div>
+      }
 
     </div>
+  }
 
-  </div>
+  <!-- Request Modal -->
+  @if (isRequestModalOpen && selectedDonation) {
+    <div class="modal-backdrop" (click)="closeRequestModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>Request Food for Redistribution</h2>
+          <button class="close-btn" (click)="closeRequestModal()">&times;</button>
+        </div>
 
-  <p *ngIf="filteredDonations.length === 0">
-    No food donations available.
-  </p>
+        <div class="modal-donation-summary">
+          <strong>Donation:</strong> {{ selectedDonation.title }}<br/>
+          <strong>Available Quantity:</strong> {{ getRemainingQuantity(selectedDonation) }} {{ selectedDonation.quantityUnit }}<br/>
+          <strong>Pickup Location:</strong> {{ selectedDonation.pickupAddress || 'Provided upon approval' }}
+        </div>
+
+        @if (errorMessage) {
+          <div class="modal-error">
+            {{ errorMessage }}
+          </div>
+        }
+
+        <div class="modal-field">
+          <label for="reqQty">Required Quantity ({{ selectedDonation.quantityUnit }}) *</label>
+          <input
+            id="reqQty"
+            type="number"
+            min="1"
+            [max]="getRemainingQuantity(selectedDonation)"
+            [(ngModel)]="requestQuantity"
+          />
+        </div>
+
+        <div class="modal-field">
+          <label for="beneficiaryCount">Estimated Beneficiaries / People Served *</label>
+          <input
+            id="beneficiaryCount"
+            type="number"
+            min="1"
+            [(ngModel)]="beneficiaryCount"
+          />
+        </div>
+
+        <div class="modal-field">
+          <label for="deliveryNotes">Redistribution Plan & Pickup Notes</label>
+          <textarea
+            id="deliveryNotes"
+            rows="3"
+            placeholder="Specify intended recipient shelter/community, transport capability, or scheduled pickup window..."
+            [(ngModel)]="deliveryNotes"
+          ></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-secondary" (click)="closeRequestModal()" [disabled]="isSubmitting">Cancel</button>
+          <button class="btn-primary" (click)="submitRequest()" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Submitting Request...' : 'Confirm Request' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
 
 </div>

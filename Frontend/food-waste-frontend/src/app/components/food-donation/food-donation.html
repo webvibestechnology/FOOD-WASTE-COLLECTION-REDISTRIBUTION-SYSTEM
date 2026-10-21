@@ -3,180 +3,221 @@
   <div class="donation-card">
 
     <h1>Create Food Donation</h1>
+    <p class="subtitle">Record surplus food with accurate safety, storage, and pickup details.</p>
+
+    <div class="food-safety-notice">
+      <strong>🛡️ Food Safety & Hygiene Assurance:</strong> Please ensure all surplus food offered is fresh, uncompromised, and prepared under food safety standards. Enter accurate safe-use deadlines and allergen information to protect vulnerable recipients.
+    </div>
 
     <form
       [formGroup]="donationForm"
       (ngSubmit)="onSubmit()"
     >
 
+      <div class="section-title">📦 Basic Food Information</div>
+
       <!-- Title -->
       <div class="form-group">
-
-        <label for="title">Title</label>
-
+        <label for="title">Food Title *</label>
         <input
           id="title"
           type="text"
           formControlName="title"
-          placeholder="Example: Cooked Rice"
+          placeholder="e.g. Cooked Rice & Lentils, Fresh Bread"
         />
-
-        @if (
-          donationForm.get('title')?.invalid &&
-          donationForm.get('title')?.touched
-        ) {
-          <div class="error-text">
-            Title is required.
-          </div>
+        @if (donationForm.get('title')?.invalid && donationForm.get('title')?.touched) {
+          <div class="error-text">Title is required.</div>
         }
-
       </div>
-
 
       <!-- Description -->
       <div class="form-group">
-
-        <label for="description">Description</label>
-
+        <label for="description">Detailed Description</label>
         <textarea
           id="description"
           formControlName="description"
-          rows="4"
-          placeholder="Describe the food"
+          rows="3"
+          placeholder="Describe contents, ingredients, packaging, or special handling..."
         ></textarea>
-
       </div>
 
+      <!-- Category & Quantity Row -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="category">Category *</label>
+          <select id="category" formControlName="category">
+            <option value="">Select category</option>
+            <option value="COOKED_FOOD">Cooked Food</option>
+            <option value="RAW_VEGETABLES">Raw Vegetables</option>
+            <option value="FRUITS">Fruits</option>
+            <option value="BAKERY">Bakery</option>
+            <option value="DAIRY">Dairy</option>
+            <option value="PACKAGED">Packaged / Canned</option>
+            <option value="OTHER">Other</option>
+          </select>
+          @if (donationForm.get('category')?.invalid && donationForm.get('category')?.touched) {
+            <div class="error-text">Category is required.</div>
+          }
+        </div>
 
-      <!-- Quantity -->
+        <div class="form-group">
+          <label for="dietaryInfo">Dietary Information *</label>
+          <select id="dietaryInfo" formControlName="dietaryInfo">
+            <option value="Vegetarian">Vegetarian</option>
+            <option value="Vegan">Vegan</option>
+            <option value="Halal">Halal</option>
+            <option value="Kosher">Kosher</option>
+            <option value="Non-Vegetarian">Non-Vegetarian</option>
+            <option value="Dairy-Free">Dairy-Free</option>
+            <option value="Gluten-Free">Gluten-Free</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Quantity and Unit Row -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="quantity">Quantity *</label>
+          <input
+            id="quantity"
+            type="number"
+            formControlName="quantity"
+            min="1"
+            placeholder="e.g. 50"
+          />
+          @if (donationForm.get('quantity')?.invalid && donationForm.get('quantity')?.touched) {
+            <div class="error-text">
+              @if (donationForm.get('quantity')?.errors?.['required']) {
+                <span>Quantity is required.</span>
+              }
+              @if (donationForm.get('quantity')?.errors?.['min']) {
+                <span>Quantity must be at least 1.</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="quantityUnit">Unit *</label>
+          <select id="quantityUnit" formControlName="quantityUnit">
+            <option value="">Select unit</option>
+            <option value="kg">Kilograms (kg)</option>
+            <option value="servings">Servings / Meals</option>
+            <option value="packets">Packets / Containers</option>
+            <option value="boxes">Boxes</option>
+            <option value="liters">Liters</option>
+          </select>
+          @if (donationForm.get('quantityUnit')?.invalid && donationForm.get('quantityUnit')?.touched) {
+            <div class="error-text">Quantity unit is required.</div>
+          }
+        </div>
+      </div>
+
+      <div class="section-title">⏱️ Safety, Storage & Timelines</div>
+
+      <!-- Preparation Time & Expiry Time -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="preparationTime">Preparation Time (if cooked)</label>
+          <input
+            id="preparationTime"
+            type="datetime-local"
+            formControlName="preparationTime"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="safeUseDeadline">Safe-Use Deadline *</label>
+          <input
+            id="safeUseDeadline"
+            type="datetime-local"
+            formControlName="safeUseDeadline"
+          />
+          @if (donationForm.get('safeUseDeadline')?.invalid && donationForm.get('safeUseDeadline')?.touched) {
+            <div class="error-text">
+              @if (donationForm.get('safeUseDeadline')?.errors?.['required']) {
+                <span>Safe-use deadline is required.</span>
+              }
+              @if (donationForm.get('safeUseDeadline')?.errors?.['pastDate']) {
+                <span>Deadline must be in the future.</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Expiry Time & Storage Requirements -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="expiryTime">Listing Expiry Date & Time *</label>
+          <input
+            id="expiryTime"
+            type="datetime-local"
+            formControlName="expiryTime"
+          />
+          @if (donationForm.get('expiryTime')?.invalid && donationForm.get('expiryTime')?.touched) {
+            <div class="error-text">
+              @if (donationForm.get('expiryTime')?.errors?.['required']) {
+                <span>Expiry time is required.</span>
+              }
+              @if (donationForm.get('expiryTime')?.errors?.['pastDate']) {
+                <span>Expiry time must be in the future.</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="storageRequirements">Storage Requirements *</label>
+          <select id="storageRequirements" formControlName="storageRequirements">
+            <option value="Ambient">Ambient / Room Temperature</option>
+            <option value="Refrigerated (<5°C)">Refrigerated (&lt;5°C)</option>
+            <option value="Frozen (<-18°C)">Frozen (&lt;-18°C)</option>
+            <option value="Hot Holding (>60°C)">Hot Holding (&gt;60°C)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Allergens -->
       <div class="form-group">
-
-        <label for="quantity">Quantity</label>
-
+        <label for="allergens">Known Allergens</label>
         <input
-          id="quantity"
-          type="number"
-          formControlName="quantity"
-          min="1"
-          placeholder="Enter quantity"
+          id="allergens"
+          type="text"
+          formControlName="allergens"
+          placeholder="e.g. Peanuts, Gluten, Dairy, Soy, Shellfish (or 'None')"
         />
-
-        @if (
-          donationForm.get('quantity')?.invalid &&
-          donationForm.get('quantity')?.touched
-        ) {
-          <div class="error-text">
-
-            @if (
-              donationForm.get('quantity')?.errors?.['required']
-            ) {
-              <span>Quantity is required.</span>
-            }
-
-            @if (
-              donationForm.get('quantity')?.errors?.['min']
-            ) {
-              <span>Quantity must be at least 1.</span>
-            }
-
-          </div>
-        }
-
       </div>
 
+      <div class="section-title">📍 Pickup Location & Contact</div>
 
-      <!-- Quantity Unit -->
+      <!-- Pickup Address -->
       <div class="form-group">
-
-        <label for="quantityUnit">Quantity Unit</label>
-
-        <select
-          id="quantityUnit"
-          formControlName="quantityUnit"
-        >
-          <option value="">Select unit</option>
-          <option value="kg">Kg</option>
-          <option value="servings">Servings</option>
-          <option value="packets">Packets</option>
-        </select>
-
-        @if (
-          donationForm.get('quantityUnit')?.invalid &&
-          donationForm.get('quantityUnit')?.touched
-        ) {
-          <div class="error-text">
-            Quantity unit is required.
-          </div>
-        }
-
-      </div>
-
-
-      <!-- Category -->
-      <div class="form-group">
-
-        <label for="category">Category</label>
-
-        <select
-          id="category"
-          formControlName="category"
-        >
-          <option value="">Select category</option>
-          <option value="COOKED_FOOD">Cooked Food</option>
-          <option value="RAW_VEGETABLES">Raw Vegetables</option>
-          <option value="FRUITS">Fruits</option>
-          <option value="BAKERY">Bakery</option>
-          <option value="DAIRY">Dairy</option>
-          <option value="PACKAGED">Packaged</option>
-          <option value="OTHER">Other</option>
-        </select>
-
-        @if (
-          donationForm.get('category')?.invalid &&
-          donationForm.get('category')?.touched
-        ) {
-          <div class="error-text">
-            Category is required.
-          </div>
-        }
-
-      </div>
-
-
-      <!-- Expiry Time -->
-      <div class="form-group">
-
-        <label for="expiryTime">Expiry Time</label>
-
+        <label for="pickupAddress">Pickup Address & Instructions *</label>
         <input
-          id="expiryTime"
-          type="datetime-local"
-          formControlName="expiryTime"
+          id="pickupAddress"
+          type="text"
+          formControlName="pickupAddress"
+          placeholder="e.g. 42 Main Street, Kitchen Back Entrance Gate 3, City"
         />
-
-        @if (
-          donationForm.get('expiryTime')?.invalid &&
-          donationForm.get('expiryTime')?.touched
-        ) {
-          <div class="error-text">
-
-            @if (
-              donationForm.get('expiryTime')?.errors?.['required']
-            ) {
-              <span>Expiry time is required.</span>
-            }
-
-            @if (
-              donationForm.get('expiryTime')?.errors?.['pastDate']
-            ) {
-              <span>Expiry time must be in the future.</span>
-            }
-
-          </div>
+        @if (donationForm.get('pickupAddress')?.invalid && donationForm.get('pickupAddress')?.touched) {
+          <div class="error-text">Pickup address is required.</div>
         }
-
       </div>
 
+      <!-- Contact Phone -->
+      <div class="form-group">
+        <label for="contactPhone">Contact Phone Number *</label>
+        <input
+          id="contactPhone"
+          type="tel"
+          formControlName="contactPhone"
+          placeholder="e.g. +91 9876543210"
+        />
+        @if (donationForm.get('contactPhone')?.invalid && donationForm.get('contactPhone')?.touched) {
+          <div class="error-text">A valid contact phone number is required.</div>
+        }
+      </div>
 
       <!-- Success Message -->
       @if (successMessage) {
@@ -185,17 +226,17 @@
         </div>
       }
 
-
       <!-- Error Message -->
       @if (errorMessage) {
         <div class="error-message">
           {{ errorMessage }}
         </div>
       }
-<app-error-alert
-  [message]="errorMessage"
-  (dismiss)="errorMessage = ''">
-</app-error-alert>
+
+      <app-error-alert
+        [message]="errorMessage"
+        (dismiss)="errorMessage = ''">
+      </app-error-alert>
 
       <!-- Submit -->
       <button
@@ -203,9 +244,9 @@
         [disabled]="isLoading"
       >
         @if (isLoading) {
-          Submitting...
+          Submitting Donation...
         } @else {
-          Submit Donation
+          Submit Food Donation
         }
       </button>
 

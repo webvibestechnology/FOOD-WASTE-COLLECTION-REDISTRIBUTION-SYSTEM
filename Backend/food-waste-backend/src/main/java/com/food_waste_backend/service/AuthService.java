@@ -10,4 +10,8 @@ public interface AuthService {
     LoginResponse login(LoginRequest loginRequest);
 
     UserResponse register(RegisterRequest registerRequest);
+
+    void handleForgotPassword(String email);
+
+    void handleContactInquiry(String name, String email, String subject, String message);
 }

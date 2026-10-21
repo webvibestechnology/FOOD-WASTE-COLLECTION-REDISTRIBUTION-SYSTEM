@@ -3,6 +3,7 @@ package com.food_waste_backend.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -11,17 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.food_waste_backend.Entity.Donor;
+import com.food_waste_backend.Entity.User;
 import com.food_waste_backend.dto.UserResponse;
+import com.food_waste_backend.exception.ResourceNotFoundException;
+import com.food_waste_backend.repository.UserRepository;
 import com.food_waste_backend.service.DonorService;
 
 @RestController
 @RequestMapping("/api/donors")
+@CrossOrigin(origins = "http://localhost:4200")
 public class DonorController {
 
     private final DonorService donorService;
+    private final UserRepository userRepository;
 
-    public DonorController(DonorService donorService) {
+    public DonorController(DonorService donorService, UserRepository userRepository) {
         this.donorService = donorService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/register")
@@ -72,8 +79,8 @@ public class DonorController {
     }
 
     private Long getUserIdFromAuthentication(String email) {
-        throw new UnsupportedOperationException(
-                "Implement user ID lookup using UserRepository"
-        );
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+        return user.getId();
     }
 }

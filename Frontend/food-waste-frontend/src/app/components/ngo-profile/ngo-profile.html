@@ -1,0 +1,90 @@
+<div class="profile-container">
+
+  <div class="profile-card">
+    <div class="profile-header">
+      <div>
+        <h1>NGO Organization Profile</h1>
+        <p>Manage your redistribution organization details and contact info.</p>
+      </div>
+      <button class="edit-toggle-btn" (click)="toggleEdit()">
+        {{ isEditing ? 'Cancel Edit' : '✏️ Edit Profile' }}
+      </button>
+    </div>
+
+    @if (successMessage) {
+      <div class="alert-box alert-success">✅ {{ successMessage }}</div>
+    }
+    @if (errorMessage) {
+      <div class="alert-box alert-error">⚠️ {{ errorMessage }}</div>
+    }
+
+    <!-- Verification Badge -->
+    <div class="verification-banner" [class.verified]="profile?.verified">
+      <div class="badge-icon">{{ profile?.verified ? '🛡️' : '⏳' }}</div>
+      <div>
+        <strong>Status: {{ profile?.verified ? 'Verified NGO Organization' : 'Pending Administrative Verification' }}</strong>
+        <p>{{ profile?.verified ? 'Your organization is authorized to request food for community redistribution.' : 'Verification documents are being reviewed by platform administrators.' }}</p>
+      </div>
+    </div>
+
+    @if (!isEditing) {
+      <div class="details-grid">
+        <div class="detail-box">
+          <label>Organization Name</label>
+          <span>{{ profile?.organizationName || profile?.ngoName || profile?.name || 'Not provided' }}</span>
+        </div>
+        <div class="detail-box">
+          <label>Registration / Tax ID</label>
+          <span>{{ profile?.registrationNumber || 'Not provided' }}</span>
+        </div>
+        <div class="detail-box">
+          <label>Contact Person</label>
+          <span>{{ profile?.contactPerson || 'Not provided' }}</span>
+        </div>
+        <div class="detail-box">
+          <label>Contact Phone</label>
+          <span>{{ profile?.phone || 'Not provided' }}</span>
+        </div>
+        <div class="detail-box full-width">
+          <label>Mission & Organization Description</label>
+          <span>{{ profile?.description || 'No description provided.' }}</span>
+        </div>
+      </div>
+    } @else {
+      <form [formGroup]="profileForm" (ngSubmit)="onSave()" class="edit-form">
+        <div class="form-group">
+          <label for="orgName">Organization Name *</label>
+          <input id="orgName" type="text" formControlName="organizationName" />
+        </div>
+
+        <div class="form-group">
+          <label for="regNum">Registration / Non-profit ID *</label>
+          <input id="regNum" type="text" formControlName="registrationNumber" />
+        </div>
+
+        <div class="form-group">
+          <label for="contactPerson">Contact Person *</label>
+          <input id="contactPerson" type="text" formControlName="contactPerson" />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number *</label>
+          <input id="phone" type="tel" formControlName="phone" />
+        </div>
+
+        <div class="form-group full-width">
+          <label for="desc">Organization Description & Distribution Focus</label>
+          <textarea id="desc" rows="3" formControlName="description"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="toggleEdit()">Cancel</button>
+          <button type="submit" class="btn-save" [disabled]="isLoading">
+            {{ isLoading ? 'Saving...' : 'Save Profile Changes' }}
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+
+</div>

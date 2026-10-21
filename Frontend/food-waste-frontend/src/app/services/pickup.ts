@@ -36,6 +36,15 @@ export class Pickup {
     );
   }
 
+<<<<<<< HEAD
+=======
+  getAvailablePickups(): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/available`
+    );
+  }
+
+>>>>>>> 64475a0 (complete)
   getPickupById(id: number): Observable<any> {
     return this.http.get<any>(
       `${this.baseUrl}/${id}`
@@ -44,10 +53,18 @@ export class Pickup {
 
   updatePickupStatus(
     id: number,
-    status: string
+    status: string,
+    notes: string = ''
   ): Observable<any> {
     return this.http.patch<any>(
-      `${this.baseUrl}/${id}/status?status=${status}`,
+      `${this.baseUrl}/${id}/status`,
+      { status, notes }
+    );
+  }
+
+  claimPickup(pickupId: number): Observable<any> {
+    return this.http.put<any>(
+      `${this.baseUrl}/${pickupId}/claim`,
       {}
     );
   }

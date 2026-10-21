@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Pickup } from '../../services/pickup';
 import { Volunteer } from '../../services/volunteer';
 import { Auth } from '../../services/auth';
@@ -8,7 +9,11 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-volunteer-dashboard',
   standalone: true,
+<<<<<<< HEAD
   imports: [RouterLink, DatePipe],
+=======
+  imports: [RouterLink, CommonModule, DatePipe],
+>>>>>>> 64475a0 (complete)
   templateUrl: './volunteer-dashboard.html',
   styleUrl: './volunteer-dashboard.css'
 })

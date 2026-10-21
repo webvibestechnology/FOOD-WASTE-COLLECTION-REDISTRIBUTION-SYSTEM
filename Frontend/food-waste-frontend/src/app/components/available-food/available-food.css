@@ -1,62 +1,339 @@
-.container {
+.available-food-container {
   max-width: 1200px;
-  margin: auto;
-  padding: 30px;
+  margin: 30px auto;
+  padding: 0 20px;
 }
 
-.filter {
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
-.filter label {
-  margin-right: 10px;
-  font-weight: bold;
+.page-header h1 {
+  margin: 0;
+  color: #1b5e20;
+}
+
+.filter-controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.search-input {
+  padding: 9px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  min-width: 220px;
+}
+
+.search-input:focus,
+.filter select:focus {
+  outline: none;
+  border-color: #2e7d32;
 }
 
 .filter select {
-  padding: 8px 12px;
+  padding: 9px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
 }
 
-.success {
-  padding: 12px;
+.success-message {
+  padding: 14px 18px;
   margin-bottom: 20px;
-  border-radius: 5px;
-  background: #d1e7dd;
+  border-radius: 6px;
+  background: #e8f5e9;
+  border-left: 4px solid #2e7d32;
+  color: #1b5e20;
+  font-weight: 500;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  color: #666;
 }
 
 .food-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
 }
 
 .food-card {
-  padding: 20px;
+  padding: 22px;
   border-radius: 10px;
   background: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.food-card h2 {
-  margin-top: 0;
+.food-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
 }
 
-.food-card button {
-  padding: 10px 18px;
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: 19px;
+  color: #222;
+  flex: 1;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-available {
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+.tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.tag {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.tag-diet {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.tag-storage {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.tag-allergen {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.card-body {
+  flex: 1;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.card-body p {
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+  color: #555;
+}
+
+.card-body strong {
+  color: #222;
+}
+
+.quantity-highlight {
+  background: #f1f8e9;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.remaining-val {
+  font-weight: 700;
+  color: #2e7d32;
+  font-size: 16px;
+}
+
+.request-button {
+  width: 100%;
+  padding: 12px;
   border: none;
-  border-radius: 5px;
-  background: #198754;
+  border-radius: 6px;
+  background: #2e7d32;
   color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.request-button:hover {
+  background: #1b5e20;
+}
+
+/* Modal Overlay */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 520px;
+  padding: 28px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #1b5e20;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+.modal-donation-summary {
+  background: #f9f9f9;
+  padding: 12px 14px;
+  border-radius: 6px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  color: #444;
+}
+
+.modal-field {
+  margin-bottom: 16px;
+}
+
+.modal-field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #333;
+}
+
+.modal-field input,
+.modal-field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.btn-secondary {
+  padding: 10px 18px;
+  background: #e0e0e0;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
   cursor: pointer;
 }
 
-@media (max-width: 900px) {
-  .food-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.btn-primary {
+  padding: 10px 22px;
+  background: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-@media (max-width: 600px) {
+.btn-primary:disabled {
+  background: #a5d6a7;
+  cursor: not-allowed;
+}
+
+.modal-error {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .filter-controls {
+    width: 100%;
+  }
+  .search-input {
+    width: 100%;
+  }
   .food-grid {
     grid-template-columns: 1fr;
   }

@@ -1,46 +1,104 @@
-<div class="container">
+<div class="food-request-container">
 
-  <h1>My Food Requests</h1>
+  <div class="request-header">
+    <h1>My Food Redistribution Requests</h1>
 
-  <div *ngIf="requests.length === 0">
-    <p>No food requests found.</p>
+    <a routerLink="/ngo/available-food" class="browse-button">
+      + Request Surplus Food
+    </a>
   </div>
 
-  <table *ngIf="requests.length > 0">
+  @if (statusMessage) {
+    <div class="alert-box alert-success">
+      ✅ {{ statusMessage }}
+    </div>
+  }
 
-    <thead>
-      <tr>
-        <th>Food</th>
-        <th>Status</th>
-        <th>Notes</th>
-        <th>Requested At</th>
-      </tr>
-    </thead>
+  @if (errorMessage) {
+    <div class="alert-box alert-error">
+      ⚠️ {{ errorMessage }}
+    </div>
+  }
 
-    <tbody>
+  @if (isLoading) {
+    <div class="empty-state">
+      <p>Loading your food requests...</p>
+    </div>
+  } @else if (requests.length === 0) {
+    <div class="empty-state">
+      <p>No food requests found. Explore surplus food available for community distribution.</p>
+      <a routerLink="/ngo/available-food" class="cta-button">
+        Start Browsing Food
+      </a>
+    </div>
+  } @else {
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Food Listing</th>
+            <th>Requested Qty</th>
+            <th>Beneficiaries</th>
+            <th>Redistribution Plan</th>
+            <th>Status</th>
+            <th>Requested Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
 
-      <tr *ngFor="let request of requests">
+        <tbody>
+          @for (request of requests; track request.id) {
+            <tr>
+              <td>
+                <strong>{{ request.donation?.title || 'Food Donation' }}</strong>
+              </td>
 
-        <td>
-          {{ request.donation?.title || 'Food Donation' }}
-        </td>
+              <td>
+                {{ request.requestedQuantity || request.donation?.quantity }} {{ request.donation?.quantityUnit }}
+              </td>
 
-        <td>
-          {{ request.status }}
-        </td>
+              <td>
+                {{ request.beneficiaryCount ? (request.beneficiaryCount + ' people') : '-' }}
+              </td>
 
-        <td>
-          {{ request.notes || '-' }}
-        </td>
+              <td>
+                {{ request.deliveryNotes || request.notes || '-' }}
+              </td>
 
-        <td>
-          {{ request.requestedAt | date:'short' }}
-        </td>
+              <td>
+                <span
+                  class="status-badge"
+                  [class.status-pending]="request.status === 'PENDING'"
+                  [class.status-approved]="request.status === 'APPROVED' || request.status === 'ACCEPTED'"
+                  [class.status-rejected]="request.status === 'REJECTED' || request.status === 'CANCELLED'"
+                  [class.status-fulfilled]="request.status === 'FULFILLED' || request.status === 'COMPLETED' || request.status === 'COLLECTED'"
+                >
+                  {{ request.status }}
+                </span>
+              </td>
 
-      </tr>
+              <td>
+                {{ request.requestedAt | date:'medium' }}
+              </td>
 
-    </tbody>
-
-  </table>
+              <td>
+                @if (request.status === 'PENDING') {
+                  <button
+                    class="btn-cancel"
+                    [disabled]="cancellingId === request.id"
+                    (click)="cancelRequest(request.id)"
+                  >
+                    {{ cancellingId === request.id ? 'Cancelling...' : 'Cancel' }}
+                  </button>
+                } @else {
+                  <span style="color: #888; font-size: 13px;">-</span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 
 </div>

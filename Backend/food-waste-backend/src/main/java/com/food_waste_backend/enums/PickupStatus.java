@@ -1,12 +1,14 @@
 package com.food_waste_backend.enums;
 
 public enum PickupStatus {
-	REQUESTED,
+    REQUESTED,
     ACCEPTED,
     PICKUP,
+    SCHEDULED,
+    IN_PROGRESS,
     COLLECTED,
+    COMPLETED,
     CANCELLED,
     REJECTED,
-    COMPLETED,
-    SCHEDULED
+    FAILED
 }

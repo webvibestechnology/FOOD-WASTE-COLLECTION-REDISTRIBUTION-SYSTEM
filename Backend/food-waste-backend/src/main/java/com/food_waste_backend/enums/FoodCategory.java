@@ -1,10 +1,11 @@
 package com.food_waste_backend.enums;
 
 public enum FoodCategory {
-	PREPARED_MEALS,
-    RICE,
-    BREAD,
+    COOKED_FOOD,
+    RAW_VEGETABLES,
     FRUITS,
-    VEGETABLES,
+    BAKERY,
+    DAIRY,
+    PACKAGED,
     OTHER
 }

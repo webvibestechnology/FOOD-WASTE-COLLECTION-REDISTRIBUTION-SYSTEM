@@ -1,12 +1,25 @@
 <div class="container">
 
-  <h1>System Reports</h1>
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+    <div>
+      <h1 style="margin: 0; color: #1b5e20;">System Reports & Impact Metrics</h1>
+      <p style="margin: 4px 0 0 0; color: #666;">Comprehensive platform analytics and auditable redistribution data.</p>
+    </div>
+
+    <button
+      (click)="exportCsv()"
+      [disabled]="isExporting || isLoading"
+      style="padding: 10px 20px; background: #2e7d32; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;"
+    >
+      {{ isExporting ? 'Generating CSV...' : '📥 Export CSV Report' }}
+    </button>
+  </div>
 
   <div
     class="loading"
     *ngIf="isLoading"
   >
-    Loading reports...
+    Loading verified reports...
   </div>
 
   <div
@@ -15,28 +28,38 @@
   >
 
     <div class="stat-card">
-      <h3>Total Donations</h3>
+      <h3>Total Food Listings</h3>
       <p>{{ stats.totalDonations || 0 }}</p>
     </div>
 
     <div class="stat-card">
-      <h3>Total Pickups</h3>
+      <h3>Completed Pickups & Deliveries</h3>
       <p>{{ stats.totalPickups || 0 }}</p>
     </div>
 
     <div class="stat-card">
-      <h3>Total Requests</h3>
+      <h3>Redistribution Requests</h3>
       <p>{{ stats.totalRequests || 0 }}</p>
     </div>
 
     <div class="stat-card">
-      <h3>Active Volunteers</h3>
+      <h3>Active Volunteers On Duty</h3>
       <p>{{ stats.activeVolunteers || 0 }}</p>
     </div>
 
     <div class="stat-card">
-      <h3>Active NGOs</h3>
+      <h3>Verified Partner NGOs</h3>
       <p>{{ stats.activeNgos || 0 }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Registered Food Donors</h3>
+      <p>{{ stats.totalDonors || 0 }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Total Platform Users</h3>
+      <p>{{ stats.totalUsers || 0 }}</p>
     </div>
 
   </div>
@@ -45,8 +68,7 @@
     class="note"
     *ngIf="!isLoading"
   >
-    For chart-based reporting, integrate Chart.js or similar library
-    in a future update.
+    🛡️ All reported metrics are verified directly against database records without estimation or duplication. CSV reports include categorization and operational timestamp breakdowns.
   </div>
 
 </div>

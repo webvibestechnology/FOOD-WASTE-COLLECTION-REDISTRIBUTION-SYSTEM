@@ -25,19 +25,19 @@ export class Auth {
     name: string,
     email: string,
     password: string,
-    phone: string,
+    phone: string | null,
     role: string
   ): Observable<any> {
-    return this.http.post<any>(
-      `${this.apiUrl}/register`,
-      {
-        name: name,
-        email: email,
-        password: password,
-        phone: phone,
-        role: role
-      }
-    );
+    const payload: any = {
+      name: name,
+      email: email,
+      password: password,
+      role: role
+    };
+    if (phone && phone.trim()) {
+      payload.phone = phone.trim();
+    }
+    return this.http.post<any>(`${this.apiUrl}/register`, payload);
   }
 
   logout(): void {

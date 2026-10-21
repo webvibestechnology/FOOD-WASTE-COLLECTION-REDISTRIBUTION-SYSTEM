@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Ngo } from '../../services/ngo';
 import { Admin } from '../../services/admin';
 import {DatePipe} from '@angular/common'
@@ -6,7 +7,11 @@ import {DatePipe} from '@angular/common'
 @Component({
   selector: 'app-ngo-management',
   standalone: true,
+<<<<<<< HEAD
   imports: [DatePipe],
+=======
+  imports: [CommonModule, DatePipe],
+>>>>>>> 64475a0 (complete)
   templateUrl: './ngo-management.html',
   styleUrl: './ngo-management.css'
 })

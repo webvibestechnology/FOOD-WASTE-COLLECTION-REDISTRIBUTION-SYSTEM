@@ -12,6 +12,9 @@
             @if (registerForm.get('name')?.errors?.['required']) {
               <span>Full name is required.</span>
             }
+            @if (registerForm.get('name')?.errors?.['minlength']) {
+              <span>Full name must be at least 2 characters.</span>
+            }
           </div>
         }
       </div>
@@ -35,20 +38,29 @@
       <!-- Phone -->
       <div class="form-group">
         <label for="phone">Phone (Optional)</label>
-        <input id="phone" type="tel" formControlName="phone" placeholder="Enter your phone number" />
+        <input id="phone" type="tel" formControlName="phone" placeholder="Enter your phone number (e.g. +1234567890)" />
+        @if (registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched) {
+          <div class="error-text">
+            <span>Invalid phone number format. Must be 10-15 digits.</span>
+          </div>
+        }
       </div>
 
       <!-- Password -->
       <div class="form-group">
         <label for="password">Password</label>
         <input id="password" type="password" formControlName="password" placeholder="Enter your password" />
+        <small class="hint-text">Must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 number (e.g. Password@123).</small>
         @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
           <div class="error-text">
             @if (registerForm.get('password')?.errors?.['required']) {
               <span>Password is required.</span>
             }
             @if (registerForm.get('password')?.errors?.['minlength']) {
-              <span>Password must be at least 6 characters.</span>
+              <span>Password must be at least 8 characters.</span>
+            }
+            @if (registerForm.get('password')?.errors?.['passwordStrength']) {
+              <span>Password must include at least one uppercase letter, one lowercase letter, and one number.</span>
             }
           </div>
         }
@@ -70,7 +82,7 @@
       <!-- Password Mismatch -->
       @if (registerForm.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched) {
         <div class="error-text form-error">
-          Passwords do not match
+          Passwords do not match.
         </div>
       }
 

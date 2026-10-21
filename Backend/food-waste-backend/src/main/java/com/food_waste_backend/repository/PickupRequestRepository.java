@@ -11,4 +11,8 @@ public interface PickupRequestRepository extends JpaRepository<PickupRequest, Lo
     List<PickupRequest> findByVolunteerId(Long volunteerId);
 
     List<PickupRequest> findByDonationId(Long donationId);
+
+    List<PickupRequest> findByFoodRequestId(Long foodRequestId);
+
+    List<PickupRequest> findByVolunteerIsNull();
 }

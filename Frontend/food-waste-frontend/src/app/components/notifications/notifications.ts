@@ -1,17 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Notification as NotificationService } from '../../services/notification';
 import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-notifications',
   standalone: true,
+<<<<<<< HEAD
   imports: [DatePipe],
+=======
+  imports: [CommonModule, DatePipe],
+>>>>>>> 64475a0 (complete)
   templateUrl: './notifications.html',
   styleUrl: './notifications.css'
 })
 export class NotificationsComponent implements OnInit {
 
   notifications: any[] = [];
+  private refreshInterval: any;
 
   constructor(
     private notificationService: NotificationService
@@ -19,6 +25,17 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadNotifications();
+    
+    // Auto-refresh every 10 seconds for real-time updates
+    this.refreshInterval = setInterval(() => {
+      this.loadNotifications();
+    }, 10000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.refreshInterval) {
+      clearInterval(this.refreshInterval);
+    }
   }
 
   loadNotifications(): void {

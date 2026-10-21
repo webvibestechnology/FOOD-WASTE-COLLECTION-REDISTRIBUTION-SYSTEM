@@ -1,17 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 
-import { DonationManagement } from './donation-management';
+import { DonationManagementComponent } from './donation-management';
 
-describe('DonationManagement', () => {
-  let component: DonationManagement;
-  let fixture: ComponentFixture<DonationManagement>;
+describe('DonationManagementComponent', () => {
+  let component: DonationManagementComponent;
+  let fixture: ComponentFixture<DonationManagementComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DonationManagement],
+      imports: [DonationManagementComponent],
+      providers: [provideHttpClient(), provideRouter([])]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DonationManagement);
+    fixture = TestBed.createComponent(DonationManagementComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

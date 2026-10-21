@@ -1,4 +1,3 @@
-
 package com.food_waste_backend.service;
 
 import java.util.List;
@@ -8,10 +7,15 @@ import com.food_waste_backend.dto.DonationResponse;
 
 public interface DonationService {
 
-    // Create new donation
+    // Create new donation with userId or email
     DonationResponse createDonation(
             DonationRequest request,
             Long userId
+    );
+
+    DonationResponse createDonation(
+            DonationRequest request,
+            String email
     );
 
     // Get donation by ID
@@ -23,13 +27,22 @@ public interface DonationService {
     // Get donations of a particular donor
     List<DonationResponse> getDonationsByDonor(Long userId);
 
+    List<DonationResponse> getMyDonations(String email);
+
     // Update donation status
     DonationResponse updateDonationStatus(
             Long id,
             String status
     );
 
+    DonationResponse updateDonationStatus(
+            Long id,
+            String status,
+            String email
+    );
+
     // Delete donation
     void deleteDonation(Long id);
-}
 
+    void deleteDonation(Long id, String email);
+}

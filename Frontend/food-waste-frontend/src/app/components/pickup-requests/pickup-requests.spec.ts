@@ -1,17 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 
-import { PickupRequests } from './pickup-requests';
+import { PickupRequestsComponent } from './pickup-requests';
 
-describe('PickupRequests', () => {
-  let component: PickupRequests;
-  let fixture: ComponentFixture<PickupRequests>;
+describe('PickupRequestsComponent', () => {
+  let component: PickupRequestsComponent;
+  let fixture: ComponentFixture<PickupRequestsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PickupRequests],
+      imports: [PickupRequestsComponent],
+      providers: [provideHttpClient(), provideRouter([])]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PickupRequests);
+    fixture = TestBed.createComponent(PickupRequestsComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

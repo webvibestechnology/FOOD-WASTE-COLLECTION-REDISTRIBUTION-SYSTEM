@@ -1,17 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 
-import { DonorDashboard } from './donor-dashboard';
+import { DonorDashboardComponent } from './donor-dashboard';
 
-describe('DonorDashboard', () => {
-  let component: DonorDashboard;
-  let fixture: ComponentFixture<DonorDashboard>;
+describe('DonorDashboardComponent', () => {
+  let component: DonorDashboardComponent;
+  let fixture: ComponentFixture<DonorDashboardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DonorDashboard],
+      imports: [DonorDashboardComponent],
+      providers: [provideHttpClient(), provideRouter([])]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DonorDashboard);
+    fixture = TestBed.createComponent(DonorDashboardComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

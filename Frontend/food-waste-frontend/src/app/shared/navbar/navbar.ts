@@ -1,7 +1,7 @@
 // @ts-ignore Angular types are provided by the project's installed dependencies.
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 import { Auth } from '../../services/auth';
 
@@ -10,7 +10,7 @@ import { Auth } from '../../services/auth';
   standalone: true,
   imports: [
     RouterLink,
-    NgIf
+    CommonModule
   ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'

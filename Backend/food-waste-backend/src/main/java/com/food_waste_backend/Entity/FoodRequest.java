@@ -1,5 +1,6 @@
 package com.food_waste_backend.Entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.food_waste_backend.enums.RequestStatus;
@@ -16,19 +17,8 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.EqualsAndHashCode;
-
 @Entity
 @Table(name = "food_requests")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class FoodRequest {
 
     @Id
@@ -36,19 +26,21 @@ public class FoodRequest {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "ngo_id", nullable = false)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    @JoinColumn(name = "ngo_id")
     private Ngo ngo;
 
     @ManyToOne
     @JoinColumn(name = "donation_id", nullable = false)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private FoodDonation donation;
 
     @Enumerated(EnumType.STRING)
     private RequestStatus status;
+
+    private BigDecimal requestedQuantity;
+
+    private Integer beneficiaryCount;
+
+    private String deliveryNotes;
 
     private String notes;
 
@@ -56,15 +48,15 @@ public class FoodRequest {
 
     private LocalDateTime updatedAt;
 
+    public FoodRequest() {
+    }
+
     @PrePersist
     protected void onCreate() {
-
         LocalDateTime now = LocalDateTime.now();
-
         if (status == null) {
             status = RequestStatus.PENDING;
         }
-
         requestedAt = now;
         updatedAt = now;
     }
@@ -72,5 +64,85 @@ public class FoodRequest {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Ngo getNgo() {
+        return ngo;
+    }
+
+    public void setNgo(Ngo ngo) {
+        this.ngo = ngo;
+    }
+
+    public FoodDonation getDonation() {
+        return donation;
+    }
+
+    public void setDonation(FoodDonation donation) {
+        this.donation = donation;
+    }
+
+    public RequestStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(RequestStatus status) {
+        this.status = status;
+    }
+
+    public BigDecimal getRequestedQuantity() {
+        return requestedQuantity;
+    }
+
+    public void setRequestedQuantity(BigDecimal requestedQuantity) {
+        this.requestedQuantity = requestedQuantity;
+    }
+
+    public Integer getBeneficiaryCount() {
+        return beneficiaryCount;
+    }
+
+    public void setBeneficiaryCount(Integer beneficiaryCount) {
+        this.beneficiaryCount = beneficiaryCount;
+    }
+
+    public String getDeliveryNotes() {
+        return deliveryNotes;
+    }
+
+    public void setDeliveryNotes(String deliveryNotes) {
+        this.deliveryNotes = deliveryNotes;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public LocalDateTime getRequestedAt() {
+        return requestedAt;
+    }
+
+    public void setRequestedAt(LocalDateTime requestedAt) {
+        this.requestedAt = requestedAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

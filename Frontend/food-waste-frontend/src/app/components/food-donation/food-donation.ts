@@ -12,14 +12,23 @@ import {
   Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { Donation } from '../../services/donation';
+<<<<<<< HEAD
 import { ErrorAlert } from '../../shared error alert/error-alert/error-alert';
+=======
+import { ErrorAlert } from '../../shared/error-alert/error-alert';
+>>>>>>> 64475a0 (complete)
 
 @Component({
   selector: 'app-food-donation',
   standalone: true,
   imports: [
     ReactiveFormsModule,
+<<<<<<< HEAD
+=======
+    CommonModule,
+>>>>>>> 64475a0 (complete)
     ErrorAlert
   ],
   templateUrl: './food-donation.html',
@@ -39,6 +48,7 @@ export class FoodDonationComponent {
   ) {
     this.donationForm = this.formBuilder.group({
       title: ['', Validators.required],
+<<<<<<< HEAD
 
       description: [''],
 
@@ -67,6 +77,20 @@ export class FoodDonationComponent {
           this.futureDateValidator()
         ]
       ]
+=======
+      description: [''],
+      quantity: ['', [Validators.required, Validators.min(1)]],
+      quantityUnit: ['', Validators.required],
+      category: ['', Validators.required],
+      expiryTime: ['', [Validators.required, this.futureDateValidator()]],
+      preparationTime: [''],
+      safeUseDeadline: ['', [Validators.required, this.futureDateValidator()]],
+      allergens: [''],
+      storageRequirements: ['Ambient', Validators.required],
+      dietaryInfo: ['Vegetarian', Validators.required],
+      pickupAddress: ['', Validators.required],
+      contactPhone: ['', [Validators.required, Validators.pattern(/^[0-9+\s-]{7,15}$/)]]
+>>>>>>> 64475a0 (complete)
     });
   }
 
@@ -93,7 +117,6 @@ export class FoodDonationComponent {
   }
 
   onSubmit(): void {
-
     this.successMessage = '';
     this.errorMessage = '';
 
@@ -103,31 +126,21 @@ export class FoodDonationComponent {
     }
 
     this.isLoading = true;
-
     const formData = this.donationForm.value;
 
     this.donationService.createDonation(formData).subscribe({
-
       next: () => {
-
-        this.successMessage =
-          'Donation submitted successfully!';
-
+        this.successMessage = 'Food donation submitted successfully with food safety details!';
         this.isLoading = false;
 
         setTimeout(() => {
           this.router.navigate(['/donor/history']);
-        }, 2000);
+        }, 1500);
       },
-
-      error: () => {
-
-        this.errorMessage =
-          'Failed to submit donation. Please try again.';
-
+      error: (err: any) => {
+        this.errorMessage = err?.error?.message || 'Failed to submit donation. Please check food safety fields and try again.';
         this.isLoading = false;
       }
-
     });
   }
 }

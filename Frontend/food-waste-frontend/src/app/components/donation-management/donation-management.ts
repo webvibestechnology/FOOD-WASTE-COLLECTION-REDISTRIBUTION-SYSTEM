@@ -2,12 +2,17 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Admin } from '../../services/admin';
 
 @Component({
   selector: 'app-donation-management',
   standalone: true,
+<<<<<<< HEAD
   imports: [FormsModule,DatePipe],
+=======
+  imports: [FormsModule, CommonModule, DatePipe],
+>>>>>>> 64475a0 (complete)
   templateUrl: './donation-management.html',
   styleUrls: ['./donation-management.css']
 })

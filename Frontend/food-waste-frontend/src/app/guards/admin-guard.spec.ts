@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 
 import { adminGuard } from './admin-guard';
 
@@ -8,7 +9,9 @@ describe('adminGuard', () => {
     TestBed.runInInjectionContext(() => adminGuard(...guardParameters));
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [provideHttpClient(), provideRouter([])]
+    });
   });
 
   it('should be created', () => {

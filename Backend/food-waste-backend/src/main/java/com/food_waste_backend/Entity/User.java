@@ -2,8 +2,6 @@ package com.food_waste_backend.Entity;
 
 import java.time.LocalDateTime;
 
-import org.jspecify.annotations.Nullable;
-
 import com.food_waste_backend.enums.UserRole;
 
 import jakarta.persistence.Column;
@@ -17,17 +15,8 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Entity
 @Table(name = "users")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class User {
 
     @Id
@@ -48,84 +37,111 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @Builder.Default
     private Boolean enabled = true;
 
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
+    public User() {
+    }
+
+    public User(Long id, String name, String email, String password, String phone, UserRole role, Boolean enabled, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.role = role;
+        this.enabled = enabled;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     @PrePersist
     protected void onCreate() {
         LocalDateTime now = LocalDateTime.now();
-
         if (enabled == null) {
             enabled = true;
         }
-
-        setCreatedAt(now);
-        setUpdatedAt(now);
+        createdAt = now;
+        updatedAt = now;
     }
 
     @PreUpdate
     protected void onUpdate() {
-        setUpdatedAt(LocalDateTime.now());
+        updatedAt = LocalDateTime.now();
     }
 
-	public Object getEmail() {
-		return null;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Object getName() {
-		return null;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Object getRole() {
-		return null;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Object getId() {
-		return null;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setName(String name2) {
-		
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email2) {
-		
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getPassword() {
-		return null;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
+    public UserRole getRole() {
+        return role;
+    }
 
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
 
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
+    public Boolean getEnabled() {
+        return enabled;
+    }
 
-	public void setPassword(@Nullable String encode) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }

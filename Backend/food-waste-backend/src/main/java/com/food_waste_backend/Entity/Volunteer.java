@@ -11,17 +11,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Entity
 @Table(name = "volunteers")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Volunteer {
 
     @Id
@@ -32,7 +23,6 @@ public class Volunteer {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Builder.Default
     private Boolean available = true;
 
     private String vehicleType;
@@ -41,13 +31,62 @@ public class Volunteer {
 
     private LocalDateTime joinedAt;
 
+    public Volunteer() {
+    }
+
     @PrePersist
     protected void onCreate() {
-
         if (available == null) {
             available = true;
         }
-
         joinedAt = LocalDateTime.now();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
+
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
+    public String getOperatingArea() {
+        return operatingArea;
+    }
+
+    public void setOperatingArea(String operatingArea) {
+        this.operatingArea = operatingArea;
+    }
+
+    public LocalDateTime getJoinedAt() {
+        return joinedAt;
+    }
+
+    public void setJoinedAt(LocalDateTime joinedAt) {
+        this.joinedAt = joinedAt;
     }
 }

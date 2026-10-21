@@ -4,12 +4,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.food_waste_backend.Entity.Ngo;
 
 public interface NgoRepository extends JpaRepository<Ngo, Long> {
 
     Optional<Ngo> findByUserId(Long userId);
+
+    @Query("SELECT n FROM Ngo n WHERE n.user.email = :email")
+    Optional<Ngo> findByUserEmail(String email);
 
     List<Ngo> findByVerifiedTrue();
 }

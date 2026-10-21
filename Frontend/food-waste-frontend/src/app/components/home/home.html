@@ -34,6 +34,36 @@
 </section>
 
 
+<!-- Statistics Section - Live Metrics from Database -->
+<section class="stats-section">
+
+  <div class="stats-container">
+
+    <div class="stat-item">
+      <div class="stat-number">{{ stats?.totalDonations || 0 }}</div>
+      <div class="stat-label">Food Listings Created</div>
+    </div>
+
+    <div class="stat-item">
+      <div class="stat-number">{{ stats?.totalPickups || 0 }}</div>
+      <div class="stat-label">Deliveries Completed</div>
+    </div>
+
+    <div class="stat-item">
+      <div class="stat-number">{{ stats?.activeNgos || 0 }}</div>
+      <div class="stat-label">Verified NGO Partners</div>
+    </div>
+
+    <div class="stat-item">
+      <div class="stat-number">{{ stats?.activeVolunteers || 0 }}</div>
+      <div class="stat-label">Volunteers On Duty</div>
+    </div>
+
+  </div>
+
+</section>
+
+
 <!-- Features Section -->
 <section class="features">
 
@@ -91,6 +121,62 @@
         it to NGOs. Your time and effort can help reduce
         food waste in the community.
       </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- Impact Section -->
+<section class="impact-section">
+
+  <h2>Our Impact</h2>
+
+  <div class="impact-container">
+
+    <div class="impact-card">
+      <h3>Environmental</h3>
+      <p>Reduce methane emissions from landfills by diverting food waste to those in need.</p>
+    </div>
+
+    <div class="impact-card">
+      <h3>Social</h3>
+      <p>Provide nutritious meals to vulnerable communities and support local NGOs.</p>
+    </div>
+
+    <div class="impact-card">
+      <h3>Economic</h3>
+      <p>Help businesses reduce waste disposal costs while giving back to the community.</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CTA Section -->
+<section class="cta-section">
+
+  <div class="cta-content">
+
+    <h2>Ready to Make a Difference?</h2>
+
+    <p>
+      Join the verified donors, NGOs, and volunteers who are
+      actively eliminating food waste in their communities.
+    </p>
+
+    <div class="cta-buttons">
+
+      <a routerLink="/register" class="cta-button">
+        Get Started Today
+      </a>
+
+      <a routerLink="/about" class="cta-button secondary">
+        Learn More
+      </a>
 
     </div>
 

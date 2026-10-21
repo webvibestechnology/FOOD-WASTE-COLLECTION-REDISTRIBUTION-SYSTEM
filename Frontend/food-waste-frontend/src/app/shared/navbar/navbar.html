@@ -9,8 +9,7 @@
   <div class="navbar-links">
 
     <!-- Not Logged In -->
-    <ng-container *ngIf="!isLoggedIn">
-
+    @if (!isLoggedIn) {
       <a routerLink="/">Home</a>
 
       <a routerLink="/about">About</a>
@@ -24,13 +23,11 @@
       <a routerLink="/register" class="register-button">
         Register
       </a>
-
-    </ng-container>
+    }
 
 
     <!-- Donor -->
-    <ng-container *ngIf="isLoggedIn && isDonor">
-
+    @if (isLoggedIn && isDonor) {
       <span class="welcome">
         Hi, {{ userName }}
       </span>
@@ -54,13 +51,11 @@
       <button (click)="logout()">
         Logout
       </button>
-
-    </ng-container>
+    }
 
 
     <!-- NGO -->
-    <ng-container *ngIf="isLoggedIn && isNgo">
-
+    @if (isLoggedIn && isNgo) {
       <span class="welcome">
         Hi, {{ userName }}
       </span>
@@ -84,13 +79,11 @@
       <button (click)="logout()">
         Logout
       </button>
-
-    </ng-container>
+    }
 
 
     <!-- Volunteer -->
-    <ng-container *ngIf="isLoggedIn && isVolunteer">
-
+    @if (isLoggedIn && isVolunteer) {
       <span class="welcome">
         Hi, {{ userName }}
       </span>
@@ -110,13 +103,11 @@
       <button (click)="logout()">
         Logout
       </button>
-
-    </ng-container>
+    }
 
 
     <!-- Admin -->
-    <ng-container *ngIf="isLoggedIn && isAdmin">
-
+    @if (isLoggedIn && isAdmin) {
       <span class="welcome">
         Hi, {{ userName }}
       </span>
@@ -148,8 +139,7 @@
       <button (click)="logout()">
         Logout
       </button>
-
-    </ng-container>
+    }
 
   </div>
 

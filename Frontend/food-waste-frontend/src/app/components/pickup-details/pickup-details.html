@@ -1,85 +1,216 @@
-<div class="container">
+<div class="pickup-details-container">
 
   <button
     class="back-button"
     (click)="goBack()"
   >
-    ← Back
+    ← Back to Assigned Pickups
   </button>
 
-  <div
-    class="details-card"
-    *ngIf="pickup"
-  >
-
-    <h1>Pickup Details</h1>
-
-    <div class="detail">
-      <strong>Food:</strong>
-      {{ pickup.donation?.title || 'Food Donation' }}
+  @if (successMessage) {
+    <div style="background: #e8f5e9; color: #1b5e20; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-weight: 500;">
+      ✅ {{ successMessage }}
     </div>
+  }
 
-    <div class="detail">
-      <strong>Description:</strong>
-      {{ pickup.donation?.description || '-' }}
+  @if (errorMessage) {
+    <div style="background: #fee2e2; color: #b91c1c; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px;">
+      ⚠️ {{ errorMessage }}
     </div>
+  }
 
-    <div class="detail">
-      <strong>Quantity:</strong>
-      {{ pickup.donation?.quantity || '-' }}
-      {{ pickup.donation?.quantityUnit || '' }}
+  @if (pickup) {
+    <div class="details-card">
+
+      <div class="card-title-row">
+        <h1>Task #{{ pickup.id }}: {{ pickup.donationTitle || pickup.donation?.title || 'Food Redistribution' }}</h1>
+        <span
+          class="status-badge"
+          [class.status-scheduled]="pickup.status === 'SCHEDULED'"
+          [class.status-in-progress]="pickup.status === 'IN_PROGRESS'"
+          [class.status-collected]="pickup.status === 'COLLECTED'"
+          [class.status-completed]="pickup.status === 'COMPLETED'"
+          [class.status-failed]="pickup.status === 'FAILED'"
+        >
+          {{ pickup.status }}
+        </span>
+      </div>
+
+      <!-- Timeline Tracking -->
+      <div class="timeline">
+        <div class="timeline-step" [class.completed]="pickup.status === 'IN_PROGRESS' || pickup.status === 'COLLECTED' || pickup.status === 'COMPLETED'" [class.active]="pickup.status === 'SCHEDULED'">
+          <div class="step-circle">1</div>
+          <div class="step-label">Scheduled</div>
+        </div>
+
+        <div class="timeline-step" [class.completed]="pickup.status === 'COLLECTED' || pickup.status === 'COMPLETED'" [class.active]="pickup.status === 'IN_PROGRESS'">
+          <div class="step-circle">2</div>
+          <div class="step-label">En Route</div>
+        </div>
+
+        <div class="timeline-step" [class.completed]="pickup.status === 'COMPLETED'" [class.active]="pickup.status === 'COLLECTED'">
+          <div class="step-circle">3</div>
+          <div class="step-label">Collected</div>
+        </div>
+
+        <div class="timeline-step" [class.completed]="pickup.status === 'COMPLETED'" [class.active]="pickup.status === 'COMPLETED'">
+          <div class="step-circle">4</div>
+          <div class="step-label">Delivered</div>
+        </div>
+      </div>
+
+      <div class="details-grid">
+
+        <div class="detail-item">
+          <label>Food Item:</label>
+          <span>{{ pickup.donationTitle || pickup.donation?.title || 'Surplus Food' }}</span>
+        </div>
+
+        <div class="detail-item">
+          <label>Category:</label>
+          <span>{{ pickup.category || pickup.donation?.category || 'Food' }}</span>
+        </div>
+
+        <div class="detail-item">
+          <label>Quantity:</label>
+          <span>
+            {{ pickup.quantity || pickup.donation?.quantity || '-' }}
+            {{ pickup.quantityUnit || pickup.donation?.quantityUnit || '' }}
+          </span>
+        </div>
+
+        <div class="detail-item">
+          <label>Scheduled Window:</label>
+          <span>{{ pickup.scheduledTime | date:'medium' }}</span>
+        </div>
+
+        @if (pickup.collectedTime) {
+          <div class="detail-item">
+            <label>Actual Collection Time:</label>
+            <span>{{ pickup.collectedTime | date:'medium' }}</span>
+          </div>
+        }
+
+        @if (pickup.completedTime) {
+          <div class="detail-item">
+            <label>Actual Delivery Time:</label>
+            <span>{{ pickup.completedTime | date:'medium' }}</span>
+          </div>
+        }
+
+        <!-- Origin: Donor -->
+        <div class="detail-item">
+          <label>Pickup Location (Donor):</label>
+          <span>{{ pickup.pickupAddress || pickup.donation?.pickupAddress || 'Address on file' }}</span>
+          @if (pickup.pickupAddress || pickup.donation?.pickupAddress) {
+            <a [href]="getMapUrl(pickup.pickupAddress || pickup.donation?.pickupAddress)" target="_blank" class="map-link">
+              🗺️ Open in Google Maps ↗
+            </a>
+          }
+        </div>
+
+        <div class="detail-item">
+          <label>Donor Contact:</label>
+          <span>
+            {{ pickup.donorName || pickup.donor?.name || 'Food Donor' }}
+            @if (pickup.donorPhone || pickup.donor?.phone) {
+              - 📞 {{ pickup.donorPhone || pickup.donor?.phone }}
+            }
+          </span>
+        </div>
+
+        <!-- Destination: NGO -->
+        <div class="detail-item">
+          <label>Redistribution Destination (NGO):</label>
+          <span>{{ pickup.ngoName || pickup.ngo?.name || 'Partner NGO' }}</span>
+        </div>
+
+        <div class="detail-item">
+          <label>Delivery Destination Address:</label>
+          <span>{{ pickup.deliveryAddress || 'NGO Distribution Center' }}</span>
+          @if (pickup.deliveryAddress) {
+            <a [href]="getMapUrl(pickup.deliveryAddress)" target="_blank" class="map-link">
+              🗺️ Open Delivery in Google Maps ↗
+            </a>
+          }
+        </div>
+
+        <div class="detail-item">
+          <label>Assigned Volunteer:</label>
+          <span>{{ pickup.volunteerName || 'You (Volunteer)' }}</span>
+        </div>
+
+        @if (pickup.handoverNotes) {
+          <div class="detail-item" style="grid-column: 1 / -1;">
+            <label>Handover & Operation Log:</label>
+            <span>{{ pickup.handoverNotes }}</span>
+          </div>
+        }
+
+      </div>
+
+      <!-- Volunteer Action Notes / Status Updates -->
+      @if (pickup.status !== 'COMPLETED' && pickup.status !== 'FAILED') {
+        <div class="notes-input-area">
+          <label for="actionNotes">Operation / Handover Notes (Optional)</label>
+          <textarea
+            id="actionNotes"
+            rows="2"
+            placeholder="Add notes e.g., 'Arrived at site, confirmed sealed packaging', or exception details..."
+            [(ngModel)]="notes"
+          ></textarea>
+        </div>
+
+        <div class="action-buttons">
+
+          @if (pickup.status === 'SCHEDULED') {
+            <button
+              class="action-button start"
+              [disabled]="isUpdating"
+              (click)="updateStatus('IN_PROGRESS')"
+            >
+              Start Pickup (En Route)
+            </button>
+          }
+
+          @if (pickup.status === 'IN_PROGRESS') {
+            <button
+              class="action-button collect"
+              [disabled]="isUpdating"
+              (click)="updateStatus('COLLECTED')"
+            >
+              Confirm Food Collected from Donor
+            </button>
+          }
+
+          @if (pickup.status === 'COLLECTED') {
+            <button
+              class="action-button complete"
+              [disabled]="isUpdating"
+              (click)="updateStatus('COMPLETED')"
+            >
+              Confirm Delivery Complete (Handover to NGO)
+            </button>
+          }
+
+          <button
+            class="action-button fail"
+            [disabled]="isUpdating"
+            (click)="updateStatus('FAILED')"
+          >
+            Report Exception / Issue
+          </button>
+
+        </div>
+      }
+
     </div>
+  }
 
-    <div class="detail">
-      <strong>Status:</strong>
-      {{ pickup.status }}
+  @if (!pickup && !errorMessage) {
+    <div class="loading-state">
+      <p>Loading pickup task details...</p>
     </div>
-
-    <div class="detail">
-      <strong>Scheduled Time:</strong>
-      {{ pickup.scheduledTime | date:'medium' }}
-    </div>
-
-    <div
-      class="detail"
-      *ngIf="pickup.completedTime"
-    >
-      <strong>Completed Time:</strong>
-      {{ pickup.completedTime | date:'medium' }}
-    </div>
-
-    <div class="buttons">
-
-      <button
-        *ngIf="pickup.status === 'SCHEDULED'"
-        (click)="updateStatus('IN_PROGRESS')"
-      >
-        Start Pickup
-      </button>
-
-      <button
-        *ngIf="pickup.status === 'IN_PROGRESS'"
-        (click)="updateStatus('COMPLETED')"
-      >
-        Complete Pickup
-      </button>
-
-      <button
-        *ngIf="
-          pickup.status === 'SCHEDULED' ||
-          pickup.status === 'IN_PROGRESS'
-        "
-        (click)="updateStatus('FAILED')"
-      >
-        Report Failed
-      </button>
-
-    </div>
-
-  </div>
-
-  <p *ngIf="!pickup">
-    Loading pickup details...
-  </p>
+  }
 
 </div>

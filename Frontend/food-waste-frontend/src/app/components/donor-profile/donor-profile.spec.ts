@@ -1,17 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 
-import { DonorProfile } from './donor-profile';
+import { DonorProfileComponent } from './donor-profile';
 
-describe('DonorProfile', () => {
-  let component: DonorProfile;
-  let fixture: ComponentFixture<DonorProfile>;
+describe('DonorProfileComponent', () => {
+  let component: DonorProfileComponent;
+  let fixture: ComponentFixture<DonorProfileComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DonorProfile],
+      imports: [DonorProfileComponent],
+      providers: [provideHttpClient(), provideRouter([])]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DonorProfile);
+    fixture = TestBed.createComponent(DonorProfileComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

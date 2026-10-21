@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class Volunteer {
 
-  private baseUrl = 'http://localhost:8080/api/volunteers';
+  private baseUrl = 'http://localhost:8080/api/volunteer';
 
   constructor(private http: HttpClient) {}
 
@@ -41,6 +41,12 @@ export class Volunteer {
   getAvailableVolunteers(): Observable<any> {
     return this.http.get<any>(
       `${this.baseUrl}/available`
+    );
+  }
+
+  getAllVolunteers(): Observable<any> {
+    return this.http.get<any>(
+      this.baseUrl
     );
   }
 }

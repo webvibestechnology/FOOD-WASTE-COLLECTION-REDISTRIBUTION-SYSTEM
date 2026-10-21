@@ -16,4 +16,10 @@ export class Report {
       `${this.baseUrl}/stats`
     );
   }
+
+  exportCsv(): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/export/csv`, {
+      responseType: 'blob'
+    });
+  }
 }

@@ -1,17 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 
-import { NgoManagement } from './ngo-management';
+import { NgoManagementComponent } from './ngo-management';
 
-describe('NgoManagement', () => {
-  let component: NgoManagement;
-  let fixture: ComponentFixture<NgoManagement>;
+describe('NgoManagementComponent', () => {
+  let component: NgoManagementComponent;
+  let fixture: ComponentFixture<NgoManagementComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NgoManagement],
+      imports: [NgoManagementComponent],
+      providers: [provideHttpClient(), provideRouter([])]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NgoManagement);
+    fixture = TestBed.createComponent(NgoManagementComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

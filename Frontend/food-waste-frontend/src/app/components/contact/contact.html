@@ -1,6 +1,6 @@
 <div class="contact-container">
 
-  <div class="contact-card">
+  <div class="contact-header">
 
     <h1>Contact Us</h1>
 
@@ -8,71 +8,135 @@
       Have a question or feedback? Send us a message.
     </p>
 
-    <form (ngSubmit)="onSubmit()">
+  </div>
 
-      <!-- Name -->
-      <div class="form-group">
+  <div class="contact-content">
 
-        <label for="name">Name</label>
+    <div class="contact-info">
 
-        <input
-          id="name"
-          type="text"
-          name="name"
-          [(ngModel)]="name"
-          required
-          placeholder="Enter your name"
-        />
+      <div class="info-card">
 
-      </div>
+        <h3>📍 Address</h3>
 
-
-      <!-- Email -->
-      <div class="form-group">
-
-        <label for="email">Email</label>
-
-        <input
-          id="email"
-          type="email"
-          name="email"
-          [(ngModel)]="email"
-          required
-          placeholder="Enter your email"
-        />
+        <p>
+          123 Green Street<br>
+          Sustainable City, SC 12345
+        </p>
 
       </div>
 
+      <div class="info-card">
 
-      <!-- Message -->
-      <div class="form-group">
+        <h3>📧 Email</h3>
 
-        <label for="message">Message</label>
-
-        <textarea
-          id="message"
-          name="message"
-          [(ngModel)]="message"
-          required
-          rows="5"
-          placeholder="Enter your message"
-        ></textarea>
+        <p>
+          info@foodwasteconnect.org<br>
+          support@foodwasteconnect.org
+        </p>
 
       </div>
 
+      <div class="info-card">
 
-      <button type="submit">
-        Send Message
-      </button>
+        <h3>📞 Phone</h3>
 
-    </form>
+        <p>
+          +1 (555) 123-4567<br>
+          Mon-Fri, 9am-5pm
+        </p>
 
-
-    @if (successMessage) {
-      <div class="success-message">
-        {{ successMessage }}
       </div>
-    }
+
+    </div>
+
+    <div class="contact-form-card">
+
+      <h2>Send us a Message</h2>
+
+      <form (ngSubmit)="onSubmit()">
+
+        <!-- Name -->
+        <div class="form-group">
+
+          <label for="name">Name</label>
+
+          <input
+            id="name"
+            type="text"
+            name="name"
+            [(ngModel)]="name"
+            required
+            placeholder="Enter your name"
+          />
+
+        </div>
+
+
+        <!-- Email -->
+        <div class="form-group">
+
+          <label for="email">Email</label>
+
+          <input
+            id="email"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            required
+            placeholder="Enter your email"
+          />
+
+        </div>
+
+
+        <!-- Subject -->
+        <div class="form-group">
+
+          <label for="subject">Subject</label>
+
+          <input
+            id="subject"
+            type="text"
+            name="subject"
+            [(ngModel)]="subject"
+            required
+            placeholder="Enter subject"
+          />
+
+        </div>
+
+
+        <!-- Message -->
+        <div class="form-group">
+
+          <label for="message">Message</label>
+
+          <textarea
+            id="message"
+            name="message"
+            [(ngModel)]="message"
+            required
+            rows="5"
+            placeholder="Enter your message"
+          ></textarea>
+
+        </div>
+
+
+        <button type="submit">
+          Send Message
+        </button>
+
+      </form>
+
+
+      @if (successMessage) {
+        <div class="success-message">
+          {{ successMessage }}
+        </div>
+      }
+
+    </div>
 
   </div>
 

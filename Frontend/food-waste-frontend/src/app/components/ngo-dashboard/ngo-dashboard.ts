@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FoodRequest } from '../../services/food-request';
 import { Auth } from '../../services/auth';
 import { DatePipe } from '@angular/common';
@@ -7,7 +8,11 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-ngo-dashboard',
   standalone: true,
+<<<<<<< HEAD
   imports: [RouterLink, DatePipe],
+=======
+  imports: [RouterLink, CommonModule, DatePipe],
+>>>>>>> 64475a0 (complete)
   templateUrl: './ngo-dashboard.html',
   styleUrl: './ngo-dashboard.css'
 })
@@ -15,6 +20,7 @@ export class NgoDashboardComponent implements OnInit {
 
   requests: any[] = [];
   currentUser: any;
+  private refreshInterval: any;
 
   constructor(
     private foodRequestService: FoodRequest,
@@ -28,6 +34,17 @@ export class NgoDashboardComponent implements OnInit {
     };
 
     this.loadRequests();
+    
+    // Auto-refresh every 10 seconds to show real-time updates
+    this.refreshInterval = setInterval(() => {
+      this.loadRequests();
+    }, 10000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.refreshInterval) {
+      clearInterval(this.refreshInterval);
+    }
   }
 
   loadRequests(): void {
@@ -60,8 +77,8 @@ export class NgoDashboardComponent implements OnInit {
 
   get fulfilledRequests(): number {
     return this.requests.filter(
-      request => request.status === 'FULFILLED' ||
-                 request.status === 'COMPLETED'
+      request => request.status === 'COMPLETED' ||
+                 request.status === 'COLLECTED'
     ).length;
   }
 

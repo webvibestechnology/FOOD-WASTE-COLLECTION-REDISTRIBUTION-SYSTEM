@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Admin } from '../../services/admin';
 import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
+<<<<<<< HEAD
   imports: [FormsModule, DatePipe],
+=======
+  imports: [FormsModule, CommonModule, DatePipe],
+>>>>>>> 64475a0 (complete)
   templateUrl: './user-management.html',
   styleUrl: './user-management.css'
 })

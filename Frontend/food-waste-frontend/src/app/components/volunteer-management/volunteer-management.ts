@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { Volunteer } from '../../services/volunteer';
 
 @Component({
   selector: 'app-volunteer-management',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './volunteer-management.html',
   styleUrl: './volunteer-management.css'
 })
@@ -23,7 +24,7 @@ export class VolunteerManagementComponent implements OnInit {
   }
 
   loadVolunteers(): void {
-    this.volunteerService.getAvailableVolunteers().subscribe({
+    this.volunteerService.getAllVolunteers().subscribe({
       next: (data: any) => {
         this.volunteers = data;
       },

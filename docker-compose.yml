@@ -1,0 +1,66 @@
+services:
+  # MySQL Database Service
+  mysql:
+    image: mysql:8.0
+    container_name: food_waste_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: food_waste_db
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-7447Swati@}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD:-7447Swati@}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    networks:
+      - food_waste_network
+
+  # Spring Boot Backend Service
+  backend:
+    build:
+      context: ./Backend/food-waste-backend
+      dockerfile: Dockerfile
+    container_name: food_waste_backend
+    restart: unless-stopped
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/food_waste_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      DB_USERNAME: root
+      DB_PASSWORD: ${DB_PASSWORD:-7447Swati@}
+      JWT_SECRET: ${JWT_SECRET:-404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+      PORT: 8080
+      JPA_DDL_AUTO: update
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - food_waste_network
+
+  # Angular Frontend Service with Nginx
+  frontend:
+    build:
+      context: ./Frontend/food-waste-frontend
+      dockerfile: Dockerfile
+    container_name: food_waste_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - food_waste_network
+
+networks:
+  food_waste_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local

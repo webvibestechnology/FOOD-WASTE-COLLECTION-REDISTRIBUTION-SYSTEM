@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import com.food_waste_backend.Entity.Donor;
 import com.food_waste_backend.Entity.User;
 import com.food_waste_backend.dto.UserResponse;
-import com.food_waste_backend.enums.UserRole;
 import com.food_waste_backend.exception.BadRequestException;
 import com.food_waste_backend.exception.ResourceNotFoundException;
 import com.food_waste_backend.repository.DonorRepository;
@@ -44,22 +43,18 @@ public class DonorServiceImpl implements DonorService {
 
         donor.setUser(user);
 
-        if (donor.getDonorType() == null) {
-            donor.setDonorType(UserRole.DONOR);
-        }
-
         Donor savedDonor = donorRepository.save(donor);
 
-        return UserResponse.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .email(user.getEmail())
-                .phone(user.getPhone())
-                .role(user.getRole() != null
+        UserResponse response = new UserResponse();
+        response.setId(user.getId());
+        response.setName(user.getName());
+        response.setEmail(user.getEmail());
+        response.setPhone(user.getPhone());
+        response.setRole(user.getRole() != null
                         ? user.getRole().name()
-                        : null)
-                .createdAt(user.getCreatedAt())
-                .build();
+                        : null);
+        response.setCreatedAt(user.getCreatedAt());
+        return response;
     }
 
     @Override
@@ -89,10 +84,6 @@ public class DonorServiceImpl implements DonorService {
 
         existingDonor.setOrganizationName(
                 donor.getOrganizationName()
-        );
-
-        existingDonor.setDonorType(
-                donor.getDonorType()
         );
 
         existingDonor.setDescription(
